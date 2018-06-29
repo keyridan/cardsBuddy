@@ -23,3 +23,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### Files with sensitive data ###
+/src/main/resources/application-prod.yml
+/src/test/resources/tinyUser.yml
