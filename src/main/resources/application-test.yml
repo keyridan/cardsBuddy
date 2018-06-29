@@ -1,0 +1,5 @@
+app:
+  jwt:
+    secret: ololo
+    expirationInMs: 99999999999999990
+    refreshBeforeMs: 9999999999999990
