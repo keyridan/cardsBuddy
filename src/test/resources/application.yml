@@ -4,4 +4,6 @@ app:
     expirationInMs: 99999999999999990
     refreshBeforeMs: 9999999999999990
 
-
+logging:
+  level:
+    com.j0rsa: INFO
