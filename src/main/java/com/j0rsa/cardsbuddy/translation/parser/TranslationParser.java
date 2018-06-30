@@ -56,7 +56,7 @@ public class TranslationParser {
 
     private static List parseJson(String json) {
         return Try.of(() -> readValue(json))
-                .onFailure(e -> log.debug(e.toString()))
+                .onFailure(e -> log.error(e.toString()))
                 .getOrElseThrow(ParserException::new);
     }
 

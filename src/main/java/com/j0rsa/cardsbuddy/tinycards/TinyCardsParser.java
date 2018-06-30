@@ -23,7 +23,7 @@ class TinyCardsParser {
     private static <T> Optional<T> parse(String json, Class<T> tClass) {
         CheckedFunction0<T> readValue = () -> mapper().readValue(json, tClass);
         return Try.of(readValue)
-                .onFailure(e -> log.info(e.toString()))
+                .onFailure(e -> log.error(e.toString()))
                 .toJavaOptional();
     }
 

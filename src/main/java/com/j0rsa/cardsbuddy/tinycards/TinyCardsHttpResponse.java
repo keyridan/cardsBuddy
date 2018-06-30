@@ -58,12 +58,12 @@ class TinyCardsHttpResponse {
 
     Optional<String> returnContent() {
         return Try.of(() -> EntityUtils.toString(response.getEntity()))
-                .onFailure(e -> log.info(e.toString()))
-                .peek(content -> log.info("returnContent: " + content))
+                .onFailure(e -> log.error(e.toString()))
+                .peek(content -> log.debug("returnContent: " + content))
                 .toJavaOptional();
     }
 
     private void logStatus(Integer statusCode, String reason) {
-        log.info("code: " + statusCode + " reason: " + reason);
+        log.debug("code: " + statusCode + " reason: " + reason);
     }
 }

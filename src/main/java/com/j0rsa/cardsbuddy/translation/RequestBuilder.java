@@ -31,7 +31,7 @@ public class RequestBuilder {
 
     public RequestBuilder word(String word) {
         String encodedWord = Try.of(() -> encode(word, "UTF-8"))
-                .onFailure(e -> log.info(e.toString()))
+                .onFailure(e -> log.error(e.toString()))
                 .getOrElseThrow(EncodeTranslationException::new);
         this.uri = String.format("%s%s&q=%s",
                 this.uri,

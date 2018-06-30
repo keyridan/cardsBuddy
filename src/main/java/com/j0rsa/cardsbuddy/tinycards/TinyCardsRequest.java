@@ -43,7 +43,7 @@ class TinyCardsRequest {
         CheckedFunction0<String> writeValue = () -> mapper().writeValueAsString(request);
 
         String json = Try.of(writeValue)
-                .onFailure(e -> log.debug(e.toString()))
+                .onFailure(e -> log.error(e.toString()))
                 .getOrElseThrow(JsonConversionException::new);
         this.request.bodyString(json, ContentType.APPLICATION_JSON);
         return this;
@@ -51,7 +51,7 @@ class TinyCardsRequest {
 
     Optional<TinyCardsResponse> execute() {
         return Try.of(this.request::execute)
-                .onFailure(e -> log.info(e.toString()))
+                .onFailure(e -> log.error(e.toString()))
                 .map(TinyCardsResponse::create)
                 .toJavaOptional();
     }
