@@ -9,6 +9,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -118,22 +120,18 @@ public class JwtTokenProvider {
         return requestAttributes.getRequest();
     }
 
-    public Date getExpiration(String token) {
+    public LocalDateTime getExpiration(String token) {
         Claims claims = getClaims(token);
-        return claims.getExpiration();
+        Date in = claims.getExpiration();
+        LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
+        return ldt;
     }
 
     public boolean mayBeRefreshed(String token) {
-        return getExpiration(token).after(refreshAvailableDate());
+        return getExpiration(token).isAfter(refreshAvailableDate());
     }
 
-    private Date refreshAvailableDate() {
-        Calendar timeout = Calendar.getInstance();
-        timeout.setTimeInMillis(now() + refreshBeforeMs);
-        return timeout.getTime();
-    }
-
-    private long now() {
-        return new Date().getTime();
+    private LocalDateTime refreshAvailableDate() {
+        return LocalDateTime.now().plusNanos(refreshBeforeMs * 1000000);
     }
 }
