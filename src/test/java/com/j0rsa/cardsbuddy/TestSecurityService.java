@@ -15,6 +15,11 @@ public class TestSecurityService implements SecurityService {
         return map;
     }
 
+    @Override
+    public String userId() {
+        return DefaultData.defaultTinyCardsId();
+    }
+
     private String formatWithPrefix(String session) {
         return String.format("%s%s", SystemConstants.TINY_CARDS_PREFIX, session);
     }

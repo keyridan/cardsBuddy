@@ -43,7 +43,7 @@ public class TinyCardsServiceTest {
 
     @Test
     public void testRequestDeckInfo() throws Exception {
-        List<DeckInfo> deckInfos = tinyCardsService.requestDeckInfo(DefaultData.defaultTinyCardsId());
+        List<DeckInfo> deckInfos = tinyCardsService.requestDeckInfo();
 
         assertThat(deckInfos).isNotEmpty();
     }

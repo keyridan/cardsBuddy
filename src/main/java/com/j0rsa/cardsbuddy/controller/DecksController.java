@@ -3,7 +3,10 @@ package com.j0rsa.cardsbuddy.controller;
 import com.j0rsa.cardsbuddy.tinycards.TinyCardsService;
 import com.j0rsa.cardsbuddy.tinycards.model.DeckInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class DecksController {
 
     @GetMapping
     @ResponseBody
-    public List<DeckInfo> translate(@RequestParam String tinyCardsId) {
-        return tinyCardsService.requestDeckInfo(tinyCardsId);
+    public List<DeckInfo> translate() {
+        return tinyCardsService.requestDeckInfo();
     }
 }

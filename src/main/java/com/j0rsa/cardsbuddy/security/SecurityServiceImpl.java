@@ -19,4 +19,10 @@ public class SecurityServiceImpl implements SecurityService {
                 .map(tokenProvider::getHeadersFromJWT)
                 .orElseThrow(IllegalStateException::new);
     }
+
+    public String userId() {
+        return tokenProvider.getJwtFromRequest()
+                .map(tokenProvider::getUsernameFromJWT)
+                .orElseThrow(IllegalStateException::new);
+    }
 }

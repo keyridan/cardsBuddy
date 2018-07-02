@@ -57,8 +57,8 @@ public class TinyCardsService {
                 .orElseThrow(ParserException::new);
     }
 
-    public List<DeckInfo> requestDeckInfo(String tinyCardsId) {
-        return get(decksInfoUri(tinyCardsId))
+    public List<DeckInfo> requestDeckInfo() {
+        return get(decksInfoUri(securityService.userId()))
                 .addCookiesHeaders(securityService.headers())
                 .execute()
                 .flatMap(TinyCardsResponse::returnResponse)

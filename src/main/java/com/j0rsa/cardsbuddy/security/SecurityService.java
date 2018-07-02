@@ -4,4 +4,5 @@ import java.util.Map;
 
 public interface SecurityService {
     Map<String, String> headers();
+    String userId();
 }
