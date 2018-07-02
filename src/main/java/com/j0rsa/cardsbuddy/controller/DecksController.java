@@ -23,7 +23,7 @@ public class DecksController {
 
     @GetMapping
     @ResponseBody
-    public List<DeckInfo> translate() {
+    public List<DeckInfo> deckInfo() {
         return tinyCardsService.requestDeckInfo();
     }
 }

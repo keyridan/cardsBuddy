@@ -1,20 +1,32 @@
 package com.j0rsa.cardsbuddy.controller;
 
+import com.j0rsa.cardsbuddy.tinycards.TinyCardsService;
+import com.j0rsa.cardsbuddy.tinycards.model.Card;
 import com.j0rsa.cardsbuddy.translation.TranslationService;
 import com.j0rsa.cardsbuddy.translation.model.Translation;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @RestController
 @RequestMapping("/api/v1/me/cards")
 public class CardsController {
+    private final TinyCardsService tinyCardsService;
 
-    @PostMapping("/employee")
+    @Autowired
+    public CardsController(TinyCardsService tinyCardsService) {
+        this.tinyCardsService = tinyCardsService;
+    }
+
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Translation translate(@RequestBody TranslationRequest request) {
-        return TranslationService.translate(request);
+    public boolean add(@RequestBody Card card, @RequestParam UUID deckId) {
+        return tinyCardsService.add(deckId, card).isPresent();
     }
 
 }
