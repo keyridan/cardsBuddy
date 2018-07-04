@@ -1,9 +1,8 @@
 package com.j0rsa.cardsbuddy.tinycards.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 public class Deck {
     private List<Card> cards = new ArrayList<>();
     private String name;
-    @JsonAlias("private")
+    @JsonProperty("private")
     private Boolean isPrivate;
     private Boolean shareable;
 
