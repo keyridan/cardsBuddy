@@ -46,17 +46,6 @@ public class TinyCardsService {
                 );
     }
 
-    private Map<String, String> parseCookies(TinyCardsHttpResponse response) {
-        return TinyCardsParser.parseAuthenticationHeaders(response.cookieHeaders());
-    }
-
-    private String parseId(TinyCardsHttpResponse response) {
-        return response.returnContent()
-                .flatMap(parseTo(TinyCardsLoginResponse.class))
-                .map(TinyCardsLoginResponse::getId)
-                .orElseThrow(ParserException::new);
-    }
-
     public List<DeckInfo> requestDeckInfo() {
         return get(decksInfoUri(securityService.userId()))
                 .addCookiesHeaders(securityService.headers())
@@ -82,12 +71,15 @@ public class TinyCardsService {
     public Optional<StatusLine> add(UUID deckId, Card card) {
         return requestDeckForEdit(deckId)
                 .map(deck -> deck.addCard(card))
-                .flatMap(deck -> patch(deckUri(deckId))
-                        .jsonTransportHeader()
-                        .jsonBodyOf(deck)
-                        .addCookiesHeaders(securityService.headers())
-                        .execute()
-                )
+                .flatMap(deck -> patchDeck(deckId, deck));
+    }
+
+    Optional<StatusLine> patchDeck(UUID deckId, Deck deck) {
+        return patch(deckUri(deckId))
+                .jsonTransportHeader()
+                .jsonBodyOf(deck)
+                .addCookiesHeaders(securityService.headers())
+                .execute()
                 .flatMap(TinyCardsResponse::returnResponse)
                 .map(TinyCardsHttpResponse::checkStatus)
                 .flatMap(TinyCardsHttpResponse::statusLine);
@@ -99,5 +91,16 @@ public class TinyCardsService {
 
     private String deckUri(UUID deckId) {
         return String.format("decks/%s", deckId);
+    }
+
+    private Map<String, String> parseCookies(TinyCardsHttpResponse response) {
+        return TinyCardsParser.parseAuthenticationHeaders(response.cookieHeaders());
+    }
+
+    private String parseId(TinyCardsHttpResponse response) {
+        return response.returnContent()
+                .flatMap(parseTo(TinyCardsLoginResponse.class))
+                .map(TinyCardsLoginResponse::getId)
+                .orElseThrow(ParserException::new);
     }
 }

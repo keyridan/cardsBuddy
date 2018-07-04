@@ -67,4 +67,31 @@ public class TinyCardsServiceTest {
         assertThat(statusLine).isPresent();
         assertThat(statusLine.get().getStatusCode()).isEqualTo(200);
     }
+
+    @Test
+    public void testPatchDeck() throws Exception {
+        Deck deck = defaultDeck();
+
+        Optional<StatusLine> statusLine = tinyCardsService.patchDeck(DefaultData.defaultDecksId(), deck);
+
+        assertThat(statusLine).isPresent();
+        assertThat(statusLine.get().getStatusCode()).isEqualTo(200);
+    }
+
+    private Deck defaultDeck() {
+        Card card1 = aCard()
+                .frontSideFact("die Prüfung")
+                .backSideFact("test")
+                .build();
+        Card card2 = aCard()
+                .frontSideFact("prüfen")
+                .backSideFact("check")
+                .build();
+        Deck deck = new Deck();
+        deck.setName("TestDeck");
+        deck.setIsPrivate(true);
+        deck.setShareable(true);
+        deck.addCards(card1, card2);
+        return deck;
+    }
 }

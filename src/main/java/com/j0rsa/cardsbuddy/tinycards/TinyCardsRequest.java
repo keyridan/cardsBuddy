@@ -5,8 +5,11 @@ import com.j0rsa.cardsbuddy.translation.exceptions.JsonConversionException;
 import io.vavr.CheckedFunction0;
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.BasicCookieStore;
 
 import java.util.Map;
 import java.util.Optional;
@@ -45,15 +48,23 @@ class TinyCardsRequest {
         String json = Try.of(writeValue)
                 .onFailure(e -> log.error(e.toString()))
                 .getOrElseThrow(JsonConversionException::new);
+        log.debug("json: " + json);
         this.request.bodyString(json, ContentType.APPLICATION_JSON);
         return this;
     }
 
     Optional<TinyCardsResponse> execute() {
-        return Try.of(this.request::execute)
+        return Try.of(() -> executorWithEmptyCookieStore().execute(this.request))
                 .onFailure(e -> log.error(e.toString()))
                 .map(TinyCardsResponse::create)
                 .toJavaOptional();
+    }
+
+    private Executor executorWithEmptyCookieStore() {
+        CookieStore cookieStore = new BasicCookieStore();
+        Executor executor = Executor.newInstance();
+        executor.cookieStore(cookieStore);
+        return executor;
     }
 
     TinyCardsRequest addCookiesHeaders(Map<String, String> headers) {

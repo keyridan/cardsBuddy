@@ -12,7 +12,6 @@ public class TextFact extends Fact {
     private String ttsUrl;
 
     public TextFact(String text) {
-        super("TEXT");
         this.text = text;
     }
 }

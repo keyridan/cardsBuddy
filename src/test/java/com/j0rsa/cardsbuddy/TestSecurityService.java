@@ -6,13 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestSecurityService implements SecurityService {
+    Map<String, String> headers = new HashMap<>();
+
+    {
+        headers.put(formatWithPrefix("jwt_token"), DefaultData.testTinyCardsJwt());
+        headers.put(formatWithPrefix("session"), DefaultData.testTinyCardsSession());
+    }
 
     @Override
     public Map<String, String> headers() {
-        Map<String, String> map = new HashMap<>();
-        map.put(formatWithPrefix("jwt_token"), DefaultData.testTinyCardsJwt());
-        map.put(formatWithPrefix("session"), DefaultData.testTinyCardsSession());
-        return map;
+        return headers;
     }
 
     @Override
