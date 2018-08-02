@@ -30,7 +30,7 @@ public class TinyCardsServiceTest {
 
         assertThat(response).isPresent();
         assertThat(response.get().getId()).isEqualTo(defaultTinyCardsId());
-        assertThat(response.get().getCookies()).hasSize(2);
+        assertThat(response.get().getCookies()).hasSize(1);
     }
 
     @Test(expected = BadCredentialsException.class)
