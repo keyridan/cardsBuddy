@@ -1,11 +1,10 @@
 package com.j0rsa.cardsbuddy.translation;
 
 import com.j0rsa.cardsbuddy.translation.model.Language;
-import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.fluent.Request;
 
-import static java.net.URLEncoder.encode;
+import static com.j0rsa.cardsbuddy.common.UriUtils.encodeUrl;
 import static org.apache.http.client.fluent.Request.Get;
 
 @Slf4j
@@ -30,9 +29,7 @@ public class RequestBuilder {
     }
 
     public RequestBuilder word(String word) {
-        String encodedWord = Try.of(() -> encode(word, "UTF-8"))
-                .onFailure(e -> log.error(e.toString()))
-                .getOrElseThrow(EncodeTranslationException::new);
+        String encodedWord = encodeUrl(word);
         this.uri = String.format("%s%s&q=%s",
                 this.uri,
                 translationParameters,

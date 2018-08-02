@@ -3,13 +3,12 @@ package com.j0rsa.cardsbuddy.leo;
 import com.j0rsa.cardsbuddy.translation.model.Language;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import io.vavr.Tuple2;
-import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.net.URLEncoder.encode;
+import static com.j0rsa.cardsbuddy.common.UriUtils.encodeUrl;
 
 @Slf4j
 class LeoUrlFactory {
@@ -51,11 +50,4 @@ class LeoUrlFactory {
     static String createUrl(TranslationRequest request) {
         return encodeUrl(String.format(LEO_PAGE_URL_TEMPLE, languagesNames(request), request.getWord()));
     }
-
-    static String encodeUrl(String url) {
-        return Try.of(() -> encode(url, "UTF-8"))
-                .onFailure(e -> log.error(e.toString()))
-                .getOrElse("");
-    }
-
 }
