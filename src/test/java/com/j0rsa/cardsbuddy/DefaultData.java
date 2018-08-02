@@ -3,6 +3,7 @@ package com.j0rsa.cardsbuddy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j0rsa.cardsbuddy.controller.model.FlectBrief;
 import com.j0rsa.cardsbuddy.controller.model.LeoBriefInfo;
+import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
 import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
 import com.j0rsa.cardsbuddy.translation.model.*;
 
@@ -52,10 +53,14 @@ public class DefaultData {
     }
 
     public static TranslationRequest.TranslationRequestBuilder requestFromDeToEn() {
-        return builder()
+        return aTranslationRequest()
                 .fromLanguage(Language.Code.DE)
                 .toLanguage(Language.Code.EN)
                 .word("Prüfung");
+    }
+
+    public static TranslationRequest.TranslationRequestBuilder aTranslationRequest() {
+        return builder();
     }
 
     public static TranslationRequest.TranslationRequestBuilder requestFromEnToDe() {
@@ -64,7 +69,7 @@ public class DefaultData {
     }
 
     public static TranslationRequest.TranslationRequestBuilder requestFromAutoToDe() {
-        return builder()
+        return aTranslationRequest()
                 .word("тест")
                 .fromLanguage(Language.Code.AUTO)
                 .toLanguage(Language.Code.DE);
@@ -78,7 +83,7 @@ public class DefaultData {
     }
 
     public static TranslationRequest.TranslationRequestBuilder requestFromEn() {
-        return builder()
+        return aTranslationRequest()
                 .fromLanguage(Language.Code.EN)
                 .word("exam");
     }
@@ -168,6 +173,12 @@ public class DefaultData {
                 .flectBrief(defaultFlectBriefNoun().build());
     }
 
+    public static LeoInfo.LeoInfoBuilder defaultInfoNoun() {
+        return LeoInfo.builder()
+                .leoBriefInfo(defaultBriefInfoNoun().build())
+                .url("https%3A%2F%2Fdict.leo.org%2Fenglisch-deutsch%2FPr%C3%BCfung");
+    }
+
     static FlectBrief.FlectBriefBuilder defaultFlectBriefVerb() {
         return FlectBrief.builder()
                 .flectForm("| las, gelesen |")
@@ -178,5 +189,11 @@ public class DefaultData {
         return LeoBriefInfo.builder()
                 .word("lesen")
                 .flectBrief(defaultFlectBriefVerb().build());
+    }
+
+    public static LeoInfo.LeoInfoBuilder defaultInfoVerb() {
+        return LeoInfo.builder()
+                .leoBriefInfo(defaultBriefInfoVerb().build())
+                .url("https%3A%2F%2Fdict.leo.org%2Fenglisch-deutsch%2Flesen");
     }
 }

@@ -2,6 +2,7 @@ package com.j0rsa.cardsbuddy.leo;
 
 import com.j0rsa.cardsbuddy.common.InfoService;
 import com.j0rsa.cardsbuddy.controller.model.LeoBriefInfo;
+import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
 import com.j0rsa.cardsbuddy.leo.exceptions.InfoNotFoundException;
 import com.j0rsa.cardsbuddy.leo.model.SideType;
 import com.j0rsa.cardsbuddy.leo.model.XmlInfo;
@@ -17,7 +18,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 @Service
-public class LeoInfoService implements InfoService<LeoBriefInfo> {
+public class LeoInfoService implements InfoService<LeoInfo> {
+
     private XmlParser xmlParser;
     private ConversionService conversionService;
 
@@ -27,12 +29,17 @@ public class LeoInfoService implements InfoService<LeoBriefInfo> {
     }
 
     @Override
-    public LeoBriefInfo search(TranslationRequest request) {
+    public LeoInfo search(TranslationRequest request) {
         return LeoInfoSearcher.search(request)
                 .map(xmlParser::fromXml)
                 .map(XmlInfo::getFirstEntryFirstSectionSidesIfExist)
                 .flatMap(findFirstSideForFromLanguage(request.getFromLanguage()))
                 .map(sideType -> conversionService.convert(sideType, LeoBriefInfo.class))
+                .map(leoBriefInfo -> LeoInfo.builder()
+                        .leoBriefInfo(leoBriefInfo)
+                        .url(LeoUrlFactory.createUrl(request))
+                        .build()
+                )
                 .orElseThrow(InfoNotFoundException::new);
     }
 
@@ -45,9 +52,8 @@ public class LeoInfoService implements InfoService<LeoBriefInfo> {
                 Language.Code.ES,
                 Language.Code.IT,
                 Language.Code.RU,
-                Language.Code.PL,
-                Language.Code.ZHTW,
-                Language.Code.ZHCN
+                Language.Code.PT,
+                Language.Code.PL
         );
     }
 

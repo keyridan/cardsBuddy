@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.leo;
 
-import com.j0rsa.cardsbuddy.controller.model.LeoBriefInfo;
+import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,23 +20,23 @@ public class LeoInfoServiceTest {
 
     @Test
     public void testDeNoun() {
-        LeoBriefInfo expected = defaultBriefInfoNoun().build();
+        LeoInfo expected = defaultInfoNoun().build();
         final TranslationRequest testTranslationRequest = requestFromDeToEn().build();
 
-        LeoBriefInfo leoBriefInfo = leoInfoService.search(testTranslationRequest);
+        LeoInfo result = leoInfoService.search(testTranslationRequest);
 
-        assertThat(leoBriefInfo).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
     public void testDeVerb() {
-        LeoBriefInfo expected = defaultBriefInfoVerb().build();
+        LeoInfo expected = defaultInfoVerb().build();
         final TranslationRequest testTranslationRequest = requestFromDeToEn()
                 .word("lesen").build();
 
-        LeoBriefInfo leoBriefInfo = leoInfoService.search(testTranslationRequest);
+        LeoInfo result = leoInfoService.search(testTranslationRequest);
 
-        assertThat(leoBriefInfo).isEqualTo(expected);
+        assertThat(result).isEqualTo(expected);
     }
 
 }

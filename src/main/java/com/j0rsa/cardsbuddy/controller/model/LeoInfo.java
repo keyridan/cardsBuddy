@@ -9,5 +9,6 @@ import lombok.Data;
 @Builder
 public class LeoInfo implements Info {
     private LeoBriefInfo leoBriefInfo;
+    private String url;
     private String flectTable;
 }
