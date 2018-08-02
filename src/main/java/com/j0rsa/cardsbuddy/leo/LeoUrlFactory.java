@@ -2,8 +2,8 @@ package com.j0rsa.cardsbuddy.leo;
 
 import com.j0rsa.cardsbuddy.translation.model.Language;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
+import io.vavr.Tuple2;
 import io.vavr.control.Try;
-import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import static java.net.URLEncoder.encode;
 @Slf4j
 class LeoUrlFactory {
     private static final String LEO_PAGE_URL_TEMPLE = "https://dict.leo.org/%s/%s";
-    private static Map<Pair<Language.Code, Language.Code>, String> leoLanguagePairs = new HashMap<>();
+    private static Map<Tuple2<Language.Code, Language.Code>, String> leoLanguagePairs = new HashMap<>();
 
     static {
         addPair(Language.Code.DE, Language.Code.EN, "englisch-deutsch");
@@ -31,12 +31,12 @@ class LeoUrlFactory {
         leoLanguagePairs.put(pair(code2, code1), value);
     }
 
-    private static Pair<Language.Code, Language.Code> pair(Language.Code code1, Language.Code code2) {
-        return new Pair<>(code1, code2);
+    private static Tuple2<Language.Code, Language.Code> pair(Language.Code code1, Language.Code code2) {
+        return new Tuple2<>(code1, code2);
     }
 
     private static String languagesNames(TranslationRequest request) {
-        Pair<Language.Code, Language.Code> pair = pair(request.getFromLanguage(), request.getToLanguage());
+        Tuple2<Language.Code, Language.Code> pair = pair(request.getFromLanguage(), request.getToLanguage());
         return leoLanguagePairs.containsKey(pair)
                 ? leoLanguagePairs.get(pair)
                 : defaultValue(request.getFromLanguage());
