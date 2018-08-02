@@ -1,11 +1,13 @@
 package com.j0rsa.cardsbuddy.controller.model;
 
+import com.j0rsa.cardsbuddy.common.BriefInfo;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class LeoBriefInfo {
+public class LeoBriefInfo implements BriefInfo {
     private String word;
-    private FlectBrief flectBrief;
+    private String form;
+    private String description;
 }

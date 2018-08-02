@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class LeoInfo implements Info {
-    private LeoBriefInfo leoBriefInfo;
+    private LeoBriefInfo briefInfo;
     private String url;
-    private String flectTable;
+    private String table;
 }

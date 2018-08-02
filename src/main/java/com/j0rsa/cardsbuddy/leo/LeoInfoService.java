@@ -36,7 +36,7 @@ public class LeoInfoService implements InfoService<LeoInfo> {
                 .flatMap(findFirstSideForFromLanguage(request.getFromLanguage()))
                 .map(sideType -> conversionService.convert(sideType, LeoBriefInfo.class))
                 .map(leoBriefInfo -> LeoInfo.builder()
-                        .leoBriefInfo(leoBriefInfo)
+                        .briefInfo(leoBriefInfo)
                         .url(LeoUrlFactory.createUrl(request))
                         .build()
                 )

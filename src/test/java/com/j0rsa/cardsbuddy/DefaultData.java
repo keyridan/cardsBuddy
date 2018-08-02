@@ -1,7 +1,6 @@
 package com.j0rsa.cardsbuddy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.j0rsa.cardsbuddy.controller.model.FlectBrief;
 import com.j0rsa.cardsbuddy.controller.model.LeoBriefInfo;
 import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
 import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
@@ -161,39 +160,29 @@ public class DefaultData {
         return mapper.readValue(json, List.class);
     }
 
-    static FlectBrief.FlectBriefBuilder defaultFlectBriefNoun() {
-        return FlectBrief.builder()
-                .flectForm("die Prüfungen")
-                .flectDescription("Pl.:");
-    }
-
     public static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoNoun() {
         return LeoBriefInfo.builder()
                 .word("die Prüfung")
-                .flectBrief(defaultFlectBriefNoun().build());
+                .form("die Prüfungen")
+                .description("Pl.:");
     }
 
     public static LeoInfo.LeoInfoBuilder defaultInfoNoun() {
         return LeoInfo.builder()
-                .leoBriefInfo(defaultBriefInfoNoun().build())
+                .briefInfo(defaultBriefInfoNoun().build())
                 .url("https%3A%2F%2Fdict.leo.org%2Fenglisch-deutsch%2FPr%C3%BCfung");
-    }
-
-    static FlectBrief.FlectBriefBuilder defaultFlectBriefVerb() {
-        return FlectBrief.builder()
-                .flectForm("| las, gelesen |")
-                .flectDescription("Akk.");
     }
 
     public static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoVerb() {
         return LeoBriefInfo.builder()
                 .word("lesen")
-                .flectBrief(defaultFlectBriefVerb().build());
+                .form("| las, gelesen |")
+                .description("Akk.");
     }
 
     public static LeoInfo.LeoInfoBuilder defaultInfoVerb() {
         return LeoInfo.builder()
-                .leoBriefInfo(defaultBriefInfoVerb().build())
+                .briefInfo(defaultBriefInfoVerb().build())
                 .url("https%3A%2F%2Fdict.leo.org%2Fenglisch-deutsch%2Flesen");
     }
 }
