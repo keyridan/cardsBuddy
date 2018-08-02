@@ -1,6 +1,8 @@
 package com.j0rsa.cardsbuddy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.j0rsa.cardsbuddy.controller.model.FlectBrief;
+import com.j0rsa.cardsbuddy.controller.model.LeoBriefInfo;
 import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
 import com.j0rsa.cardsbuddy.translation.model.*;
 
@@ -22,7 +24,7 @@ public class DefaultData {
         }
     }
 
-    public static LoginRequest.LoginRequestBuilder defaultLoginRequest() throws Exception {
+    public static LoginRequest.LoginRequestBuilder defaultLoginRequest() {
         TestData testData = getTestData();
         return LoginRequest.builder()
                 .identifier(testData.getEmail())
@@ -41,11 +43,11 @@ public class DefaultData {
         return getTestData().getDeckId();
     }
 
-    public static String testTinyCardsSession() {
+    static String testTinyCardsSession() {
         return getTestData().getTestTinyCardsSession();
     }
 
-    public static String testTinyCardsJwt() {
+    static String testTinyCardsJwt() {
         return getTestData().getTestTinyCardsJwt();
     }
 
@@ -141,16 +143,40 @@ public class DefaultData {
         return TranslationPair.builder().wordFrom("exam").wordTo("Prüfung").build();
     }
 
-    public static TranslationPair translationAutoToDePair() {
+    static TranslationPair translationAutoToDePair() {
         return TranslationPair.builder().wordFrom("тест").wordTo("Quiz").build();
     }
 
-    public static TranslationPair translationDeToEnPair() {
+    static TranslationPair translationDeToEnPair() {
         return TranslationPair.builder().wordFrom("Prüfung").wordTo("exam").build();
     }
 
     public static List readJson(String json) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, List.class);
+    }
+
+    static FlectBrief.FlectBriefBuilder defaultFlectBriefNoun() {
+        return FlectBrief.builder()
+                .flectForm("die Prüfungen")
+                .flectDescription("Pl.:");
+    }
+
+    public static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoNoun() {
+        return LeoBriefInfo.builder()
+                .word("die Prüfung")
+                .flectBrief(defaultFlectBriefNoun().build());
+    }
+
+    static FlectBrief.FlectBriefBuilder defaultFlectBriefVerb() {
+        return FlectBrief.builder()
+                .flectForm("| las, gelesen |")
+                .flectDescription("Akk.");
+    }
+
+    public static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoVerb() {
+        return LeoBriefInfo.builder()
+                .word("lesen")
+                .flectBrief(defaultFlectBriefVerb().build());
     }
 }

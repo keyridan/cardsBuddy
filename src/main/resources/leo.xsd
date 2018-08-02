@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="xml" type="xmlType"/>
+  <xs:complexType name="sideType" mixed="true">
+    <xs:sequence>
+      <xs:element type="reprType" name="repr" minOccurs="0"/>
+      <xs:element type="wordsType" name="words" minOccurs="0"/>
+      <xs:element type="searchType" name="search" minOccurs="0"/>
+      <xs:element type="iboxType" name="ibox" minOccurs="0"/>
+      <xs:element name="word" maxOccurs="unbounded" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="vocab" use="optional"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="hc" use="optional"/>
+    <xs:attribute type="xs:string" name="lang" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="tType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="n" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="domainType">
+    <xs:sequence>
+      <xs:element type="smallType" name="small"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="forumType">
+    <xs:sequence>
+      <xs:element type="linkType" name="link" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="realmgroupType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="type" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ffsynlistType">
+    <xs:sequence>
+      <xs:element type="sideType" name="side" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="word"/>
+  </xs:complexType>
+  <xs:complexType name="advMediaType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="url"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="supType">
+    <xs:sequence>
+      <xs:element type="mType" name="m"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="baseformType">
+    <xs:sequence>
+      <xs:element type="sideType" name="side" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pronType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="url" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="srType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="b" minOccurs="0"/>
+      <xs:element type="iType" name="i" minOccurs="0"/>
+      <xs:element type="mType" name="m" minOccurs="0"/>
+      <xs:element type="supType" name="sup" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="t" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="infoType" mixed="true">
+    <xs:sequence>
+      <xs:element type="categoryType" name="category" minOccurs="0"/>
+      <xs:element type="realmgroupType" name="realmgroup" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wordType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="vocab" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="flecttabrefType">
+    <xs:sequence>
+      <xs:element type="smallType" name="small"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wordsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="word" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="servicedataType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="entries"/>
+        <xs:attribute type="xs:string" name="hostName"/>
+        <xs:attribute type="xs:string" name="login"/>
+        <xs:attribute type="xs:string" name="nick"/>
+        <xs:attribute type="xs:string" name="osName"/>
+        <xs:attribute type="xs:string" name="queries"/>
+        <xs:attribute type="xs:string" name="swName"/>
+        <xs:attribute type="xs:string" name="timeUsed"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="smallType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="b" minOccurs="0"/>
+      <xs:element type="iType" name="i" minOccurs="0"/>
+      <xs:element type="mType" name="m" minOccurs="0"/>
+      <xs:element type="supType" name="sup" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="t" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="sectionlistType">
+    <xs:sequence>
+      <xs:element type="sectionType" name="section" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="sectionsort"/>
+  </xs:complexType>
+  <xs:complexType name="entryType">
+    <xs:sequence>
+      <xs:element type="sideType" name="side" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="infoType" name="info"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="aiid" use="optional"/>
+    <xs:attribute type="xs:string" name="langlvl" use="optional"/>
+    <xs:attribute type="xs:string" name="uid" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="searchType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="word" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="canonicalSearch" use="optional"/>
+    <xs:attribute type="xs:string" name="hitWordCntLeft" use="optional"/>
+    <xs:attribute type="xs:string" name="hitWordCntRight" use="optional"/>
+    <xs:attribute type="xs:string" name="hitcount" use="optional"/>
+    <xs:attribute type="xs:string" name="lang" use="optional"/>
+    <xs:attribute type="xs:string" name="lp" use="optional"/>
+    <xs:attribute type="xs:string" name="normalized" use="optional"/>
+    <xs:attribute type="xs:string" name="original" use="optional"/>
+    <xs:attribute type="xs:string" name="where" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="forumRefType">
+    <xs:sequence>
+      <xs:element type="linkType" name="link" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="count"/>
+  </xs:complexType>
+  <xs:complexType name="reprType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element type="srType" name="sr"/>
+      <xs:element type="flecttabrefType" name="flecttabref"/>
+      <xs:element type="domainType" name="domain"/>
+      <xs:element type="smallType" name="small"/>
+      <xs:element name="m">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element type="xs:string" name="b" minOccurs="0"/>
+          </xs:sequence>
+          <xs:attribute type="xs:string" name="t" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="similarType">
+    <xs:sequence>
+      <xs:element type="sideType" name="side" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="iType" mixed="true">
+    <xs:sequence>
+      <xs:element type="mType" name="m" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="mType" mixed="true">
+    <xs:sequence>
+      <xs:element type="tType" name="t" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="categoryType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="catnum" use="optional"/>
+        <xs:attribute type="xs:string" name="type" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="xmlType">
+    <xs:sequence>
+      <xs:element type="advMediaType" name="advMedia"/>
+      <xs:element type="searchType" name="search"/>
+      <xs:element type="sectionlistType" name="sectionlist"/>
+      <xs:element type="similarType" name="similar"/>
+      <xs:element type="baseformType" name="baseform"/>
+      <xs:element type="forumRefType" name="forumRef"/>
+      <xs:element type="forumType" name="forum"/>
+      <xs:element type="ffsynlistType" name="ffsynlist"/>
+      <xs:element type="servicedataType" name="servicedata"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="api"/>
+    <xs:attribute type="xs:string" name="dictQueryXSLT"/>
+    <xs:attribute type="xs:string" name="lang"/>
+    <xs:attribute type="xs:string" name="leorendertarget"/>
+    <xs:attribute type="xs:string" name="lion"/>
+    <xs:attribute type="xs:string" name="lp"/>
+  </xs:complexType>
+  <xs:complexType name="minprioType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="cnt" use="optional"/>
+        <xs:attribute type="xs:string" name="fixedSect" use="optional"/>
+        <xs:attribute type="xs:string" name="val" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="iboxType">
+    <xs:sequence>
+      <xs:element type="pronType" name="pron" minOccurs="0"/>
+      <xs:element type="flecttabType" name="flecttab" minOccurs="0"/>
+      <xs:element type="xs:string" name="extlink"/>
+      <xs:element type="xs:string" name="linguatec" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="ajaxid" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="linkType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="subject" minOccurs="0"/>
+      <xs:element type="xs:string" name="teaser" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="domain" use="optional"/>
+    <xs:attribute type="xs:string" name="followupCnt" use="optional"/>
+    <xs:attribute type="xs:string" name="href" use="optional"/>
+    <xs:attribute type="xs:string" name="lastChangeDate" use="optional"/>
+    <xs:attribute type="xs:string" name="lastChangeEpochSec" use="optional"/>
+    <xs:attribute type="xs:string" name="lastChangeTime" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="sectionType">
+    <xs:sequence>
+      <xs:element type="entryType" name="entry" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="minprioType" name="minprio" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="sctCount" use="optional"/>
+    <xs:attribute type="xs:string" name="sctDirectCnt" use="optional"/>
+    <xs:attribute type="xs:string" name="sctName" use="optional"/>
+    <xs:attribute type="xs:string" name="sctTitle" use="optional"/>
+    <xs:attribute type="xs:string" name="sctTotalCnt" use="optional"/>
+    <xs:attribute type="xs:string" name="sctnum" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="flecttabType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="stemType" use="optional"/>
+        <xs:attribute type="xs:string" name="url" use="optional"/>
+        <xs:attribute type="xs:string" name="word" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

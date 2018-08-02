@@ -127,5 +127,14 @@ public class Language {
                     .findFirst();
         }
 
+        public String lowerCaseValue() {
+            return value != null
+                    ? value.toLowerCase()
+                    : "";
+        }
+
+        public boolean lowerCaseEqual(String lang) {
+            return lowerCaseValue().equals(lang);
+        }
     }
 }
