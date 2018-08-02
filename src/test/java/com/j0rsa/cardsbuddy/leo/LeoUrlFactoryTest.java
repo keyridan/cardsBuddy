@@ -9,8 +9,9 @@ import static com.j0rsa.cardsbuddy.DefaultData.requestFromDeToEn;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LeoUrlFactoryTest {
-    private String deToEn = "https%3A%2F%2Fdict.leo.org%2Fenglisch-deutsch%2Ftest";
-    private String frToDeUrl = "https%3A%2F%2Fdict.leo.org%2Ffranz%C3%B6sisch-deutsch%2Ftest";
+    private String deToEn = "https://dict.leo.org/englisch-deutsch/test";
+    private String deToEnWithSpace = "https://dict.leo.org/englisch-deutsch/to+test";
+    private String frToDeUrl = "https://dict.leo.org/franz%C3%B6sisch-deutsch/test";
 
     @Test
     public void testWhenFromDeToEn() {
@@ -21,6 +22,17 @@ public class LeoUrlFactoryTest {
         String url = LeoUrlFactory.createUrl(request);
 
         assertThat(url).isEqualTo(deToEn);
+    }
+
+    @Test
+    public void testWhenFromDeToEnWhenWordWIthSpace() {
+        TranslationRequest request = requestFromDeToEn()
+                .word("to test")
+                .build();
+
+        String url = LeoUrlFactory.createUrl(request);
+
+        assertThat(url).isEqualTo(deToEnWithSpace);
     }
 
     @Test

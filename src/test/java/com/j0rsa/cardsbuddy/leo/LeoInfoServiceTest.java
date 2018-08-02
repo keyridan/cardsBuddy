@@ -39,4 +39,15 @@ public class LeoInfoServiceTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    public void testDeWordWithSpace() {
+        LeoInfo expected = defaultInfoVerbWithSpace().build();
+        final TranslationRequest testTranslationRequest = requestFromDeToEn()
+                .word("zu lesen").build();
+
+        LeoInfo result = leoInfoService.search(testTranslationRequest);
+
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

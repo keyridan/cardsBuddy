@@ -48,6 +48,6 @@ class LeoUrlFactory {
     }
 
     static String createUrl(TranslationRequest request) {
-        return encodeUrl(String.format(LEO_PAGE_URL_TEMPLE, languagesNames(request), request.getWord()));
+        return String.format(LEO_PAGE_URL_TEMPLE, encodeUrl(languagesNames(request)), encodeUrl(request.getWord()));
     }
 }

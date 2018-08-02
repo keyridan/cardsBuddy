@@ -5,6 +5,7 @@ import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.fluent.Request;
 
+import static com.j0rsa.cardsbuddy.common.UriUtils.encodeUrl;
 import static org.apache.http.client.fluent.Request.Get;
 
 @Slf4j
@@ -18,7 +19,7 @@ class RequestFactory {
         Language.Code fromLanguage = isDefaultLeoLanguage(translationRequest)
                 ? Language.Code.EN
                 : translationRequest.getFromLanguage();
-        String uri = String.format(INFO_URI, fromLanguage.getValue().toLowerCase(), translationRequest.getWord());
+        String uri = String.format(INFO_URI, fromLanguage.getValue().toLowerCase(), encodeUrl(translationRequest.getWord()));
         return Get(uri);
     }
 

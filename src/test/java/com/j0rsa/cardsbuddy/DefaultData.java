@@ -168,9 +168,9 @@ public class DefaultData {
     }
 
     public static LeoInfo.LeoInfoBuilder defaultInfoNoun() {
-        return LeoInfo.builder()
+        return anInfoVerb()
                 .briefInfo(defaultBriefInfoNoun().build())
-                .url("https%3A%2F%2Fdict.leo.org%2Fenglisch-deutsch%2FPr%C3%BCfung");
+                .url("https://dict.leo.org/englisch-deutsch/Pr%C3%BCfung");
     }
 
     public static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoVerb() {
@@ -181,8 +181,25 @@ public class DefaultData {
     }
 
     public static LeoInfo.LeoInfoBuilder defaultInfoVerb() {
-        return LeoInfo.builder()
+        return anInfoVerb()
                 .briefInfo(defaultBriefInfoVerb().build())
-                .url("https%3A%2F%2Fdict.leo.org%2Fenglisch-deutsch%2Flesen");
+                .url("https://dict.leo.org/englisch-deutsch/lesen");
+    }
+
+    private static LeoInfo.LeoInfoBuilder anInfoVerb() {
+        return LeoInfo.builder();
+    }
+
+    public static LeoInfo.LeoInfoBuilder defaultInfoVerbWithSpace() {
+        return anInfoVerb()
+                .briefInfo(defaultBriefInfoVerbWithSpace().build())
+                .url("https://dict.leo.org/englisch-deutsch/zu+lesen");
+    }
+
+    private static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoVerbWithSpace() {
+        return LeoBriefInfo.builder()
+                .word("Fähigkeit zu lesen")
+                .form("")
+                .description("");
     }
 }
