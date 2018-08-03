@@ -12,14 +12,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "supType", propOrder = {
         "m"
 })
-public class SupType {
+public class SupType implements ValueContainer {
 
     @XmlElement(required = true)
     protected MType m;
 
-    String getFlectDescription() {
-        return m != null
-                ? m.getFlectDescription()
-                : null;
+    @Override
+    public String parseValues() {
+        return m.parseValues();
     }
 }

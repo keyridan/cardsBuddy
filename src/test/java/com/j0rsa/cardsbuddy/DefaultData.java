@@ -1,7 +1,6 @@
 package com.j0rsa.cardsbuddy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.j0rsa.cardsbuddy.controller.model.LeoBriefInfo;
 import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
 import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
 import com.j0rsa.cardsbuddy.translation.model.*;
@@ -160,30 +159,16 @@ public class DefaultData {
         return mapper.readValue(json, List.class);
     }
 
-    public static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoNoun() {
-        return LeoBriefInfo.builder()
-                .word("die Prüfung")
-                .form("die Prüfungen")
-                .description("Pl.:");
-    }
-
     public static LeoInfo.LeoInfoBuilder defaultInfoNoun() {
         return anInfoVerb()
-                .briefInfo(defaultBriefInfoNoun().build())
                 .title("noun")
+                .description("die Prüfung Pl.: die Prüfungen")
                 .url("https://dict.leo.org/englisch-deutsch/Pr%C3%BCfung");
-    }
-
-    public static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoVerb() {
-        return LeoBriefInfo.builder()
-                .word("lesen")
-                .form("| las, gelesen |")
-                .description("Akk.");
     }
 
     public static LeoInfo.LeoInfoBuilder defaultInfoVerb() {
         return anInfoVerb()
-                .briefInfo(defaultBriefInfoVerb().build())
+                .description("(etw. Akk.) lesen| las, gelesen |")
                 .title("verb")
                 .url("https://dict.leo.org/englisch-deutsch/lesen");
     }
@@ -194,12 +179,7 @@ public class DefaultData {
 
     public static LeoInfo.LeoInfoBuilder defaultInfoVerbWithSpace() {
         return anInfoVerb()
-                .briefInfo(defaultBriefInfoVerbWithSpace().build())
+                .description("Fähigkeit zu lesen")
                 .url("https://dict.leo.org/englisch-deutsch/zu+lesen");
-    }
-
-    private static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoVerbWithSpace() {
-        return LeoBriefInfo.builder()
-                .word("Fähigkeit zu lesen");
     }
 }

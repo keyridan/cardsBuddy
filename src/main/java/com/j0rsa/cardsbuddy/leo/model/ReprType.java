@@ -2,48 +2,87 @@ package com.j0rsa.cardsbuddy.leo.model;
 
 import lombok.Data;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "reprType", propOrder = {
-        "domain",
-        "flecttabref",
-        "sr",
-        "small",
-        "m"
+        "content"
 })
-public class ReprType {
-    protected DomainType domain;
-    protected FlecttabrefType flecttabref;
-    protected SrType sr;
-    protected SmallType small;
-    protected MType m;
+public class ReprType extends ContentContainer {
+    @XmlElementRefs({
+            @XmlElementRef(name = "domain", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "flecttabref", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "sr", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "small", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "m", type = JAXBElement.class, required = false)
+    })
+    @XmlMixed
+    protected List<Serializable> content;
 
-    String getFlectDescription() {
-        String description = getIDescription();
-        return description == null
-                ? getSupDescription()
-                : description;
-    }
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "content"
+    })
+    public static class M extends ContentContainer {
 
-    private String getSupDescription() {
-        return small != null
-                ? small.getSupDescription()
-                : null;
-    }
+        @XmlElementRef(name = "b", type = JAXBElement.class, required = false)
+        @XmlMixed
+        protected List<Serializable> content;
+        @XmlAttribute(name = "t")
+        protected String t;
 
-    private String getIDescription() {
-        return flecttabref != null
-                ? flecttabref.getFlectDescription()
-                : null;
-    }
+        /**
+         * Gets the value of the content property.
+         *
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the JAXB object.
+         * This is why there is not a <CODE>set</CODE> method for the content property.
+         *
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getContent().add(newItem);
+         * </pre>
+         *
+         *
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link JAXBElement }{@code <}{@link String }{@code >}
+         * {@link String }
+         */
+        public List<Serializable> getContent() {
+            if (content == null) {
+                content = new ArrayList<Serializable>();
+            }
+            return this.content;
+        }
 
-    String getFlectForm() {
-        return flecttabref != null
-                ? flecttabref.getFlectForm()
-                : null;
+        /**
+         * Gets the value of the t property.
+         *
+         * @return possible object is
+         * {@link String }
+         */
+        public String getT() {
+            return t;
+        }
+
+        /**
+         * Sets the value of the t property.
+         *
+         * @param value allowed object is
+         *              {@link String }
+         */
+        public void setT(String value) {
+            this.t = value;
+        }
+
     }
 }

@@ -13,7 +13,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LeoInfo implements Info {
     private String title;
-    private LeoBriefInfo briefInfo;
+    private String description;
     private String url;
     private String table;
 }

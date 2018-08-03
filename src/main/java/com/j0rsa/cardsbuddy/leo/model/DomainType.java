@@ -12,6 +12,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "domainType", propOrder = {
         "small"
 })
-public class DomainType {
+public class DomainType implements ValueContainer {
     protected SmallType small;
+
+    @Override
+    public String parseValues() {
+        return small.parseValues();
+    }
 }

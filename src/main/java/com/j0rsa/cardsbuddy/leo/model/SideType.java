@@ -23,21 +23,9 @@ public class SideType {
     @XmlAttribute(name = "lang")
     protected String lang;
 
-    public String getFlectDescription() {
+    public String getDescription() {
         return repr != null
-                ? repr.getFlectDescription()
-                : null;
-    }
-
-    public String getFlectForm() {
-        return repr != null
-                ? repr.getFlectForm()
-                : null;
-    }
-
-    public String getFirstWord() {
-        return words != null
-                ? words.getFirstWord()
+                ? repr.parseValues()
                 : null;
     }
 

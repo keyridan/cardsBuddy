@@ -5,7 +5,6 @@ import org.assertj.core.util.Lists;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @XmlType(name = "srType", propOrder = {
         "content"
 })
-public class SrType {
+public class SrType extends ContentContainer {
 
     @XmlElementRefs({
             @XmlElementRef(name = "m", type = JAXBElement.class, required = false),

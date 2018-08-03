@@ -12,9 +12,7 @@ public class SideTypeToLeoBriefInfoConverter implements Converter<SideType, LeoB
     public LeoBriefInfo convert(SideType sideType) {
 
         return LeoBriefInfo.builder()
-                .description(sideType.getFlectDescription())
-                .form(sideType.getFlectForm())
-                .word(sideType.getFirstWord())
+                .description(sideType.getDescription())
                 .build();
     }
 }

@@ -12,12 +12,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "mType", propOrder = {
         "t"
 })
-public class MType {
+public class MType implements ValueContainer {
     protected TType t;
 
-    String getFlectDescription() {
-        return t != null
-                ? t.getValue()
-                : null;
+    @Override
+    public String parseValues() {
+        return t.getValue();
     }
 }

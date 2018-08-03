@@ -7,15 +7,13 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "smallType", propOrder = {
         "content"
 })
-public class SmallType {
+public class SmallType extends ContentContainer {
     @XmlAttribute(name = "t")
     protected String t;
     @XmlElementRefs({
@@ -25,56 +23,4 @@ public class SmallType {
     })
     @XmlMixed
     protected List<Serializable> content = Lists.newArrayList();
-
-    String getIDescription() {
-        return content.isEmpty()
-                ? null
-                : getITypeValue();
-    }
-
-    String getSupDescription() {
-        return content.isEmpty()
-                ? null
-                : getSupValue();
-    }
-
-    public String value() {
-        return content.isEmpty()
-                ? null
-                : getValue();
-    }
-
-    private String getValue() {
-        return content.stream()
-                .filter(contentElement -> contentElement.getClass().equals(String.class))
-                .findFirst()
-                .map(element -> ((String) element).trim())
-                .orElse(null);
-    }
-
-    private String getITypeValue() {
-        return get(IType.class)
-                .map(value -> ((IType) value).getFlectDescription())
-                .orElse(null);
-    }
-
-    private String getSupValue() {
-        return get(SupType.class)
-                .map(value -> ((SupType) value).getFlectDescription())
-                .orElse(null);
-    }
-
-    private Optional<Object> get(Class clazz) {
-        return content.stream()
-                .filter(isContentElementClass(clazz))
-                .findFirst()
-                .map(element -> ((JAXBElement) element).getValue());
-    }
-
-    private Predicate<Serializable> isContentElementClass(Class clazz) {
-        return contentElement -> contentElement.getClass().equals(JAXBElement.class)
-                && clazz.equals(((JAXBElement) contentElement).getDeclaredType());
-    }
-
-
 }

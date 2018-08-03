@@ -1,7 +1,6 @@
 package com.j0rsa.cardsbuddy.leo;
 
 import com.j0rsa.cardsbuddy.common.InfoService;
-import com.j0rsa.cardsbuddy.controller.model.LeoBriefInfo;
 import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
 import com.j0rsa.cardsbuddy.leo.exceptions.InfoNotFoundException;
 import com.j0rsa.cardsbuddy.leo.model.SideType;
@@ -9,7 +8,6 @@ import com.j0rsa.cardsbuddy.leo.model.XmlInfo;
 import com.j0rsa.cardsbuddy.translation.model.Language;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.assertj.core.util.Lists;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +19,9 @@ import java.util.function.Predicate;
 public class LeoInfoService implements InfoService<LeoInfo> {
 
     private XmlParser xmlParser;
-    private ConversionService conversionService;
 
-    public LeoInfoService(XmlParser xmlParser, ConversionService conversionService) {
+    public LeoInfoService(XmlParser xmlParser) {
         this.xmlParser = xmlParser;
-        this.conversionService = conversionService;
     }
 
     @Override
@@ -35,16 +31,12 @@ public class LeoInfoService implements InfoService<LeoInfo> {
                 .map(XmlInfo::getFirstEntryFirstSectionSidesIfExist)
                 .flatMap(findFirstSideForFromLanguage(request.getFromLanguage()))
                 .map(sideType -> LeoInfo.builder()
-                        .briefInfo(leoBriefInfo(sideType))
+                        .description(sideType.getDescription())
                         .url(LeoUrlFactory.createUrl(request))
                         .title(sideType.getWordType())
                         .build()
                 )
                 .orElseThrow(InfoNotFoundException::new);
-    }
-
-    private LeoBriefInfo leoBriefInfo(SideType sideType) {
-        return conversionService.convert(sideType, LeoBriefInfo.class);
     }
 
     @Override

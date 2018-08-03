@@ -197,7 +197,16 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link XmlInfo }{@code >}}
+     * Create an instance of {@link ReprType.M }
+     *
+     */
+    public ReprType.M createReprTypeM() {
+        return new ReprType.M();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link XmlType }{@code >}}
+     *
      */
     @XmlElementDecl(namespace = "", name = "xml")
     public JAXBElement<XmlInfo> createXml(XmlInfo value) {
@@ -254,6 +263,15 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     *
+     */
+    @XmlElementDecl(namespace = "", name = "b", scope = ReprType.M.class)
+    public JAXBElement<String> createReprTypeMB(String value) {
+        return new JAXBElement<String>(_SrTypeB_QNAME, String.class, ReprType.M.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      */
     @XmlElementDecl(namespace = "", name = "b", scope = SmallType.class)
     public JAXBElement<String> createSmallTypeB(String value) {
@@ -306,6 +324,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "domain", scope = ReprType.class)
     public JAXBElement<DomainType> createReprTypeDomain(DomainType value) {
         return new JAXBElement<DomainType>(_ReprTypeDomain_QNAME, DomainType.class, ReprType.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReprType.M }{@code >}}
+     *
+     */
+    @XmlElementDecl(namespace = "", name = "m", scope = ReprType.class)
+    public JAXBElement<ReprType.M> createReprTypeM(ReprType.M value) {
+        return new JAXBElement<ReprType.M>(_ITypeM_QNAME, ReprType.M.class, ReprType.class, value);
     }
 
     /**
