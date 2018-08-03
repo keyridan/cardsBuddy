@@ -6,4 +6,6 @@ public interface Info {
     String getDescription();
 
     String getTitle();
+
+    InfoProvider.Code getType();
 }

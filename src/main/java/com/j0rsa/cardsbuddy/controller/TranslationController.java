@@ -31,7 +31,7 @@ public class TranslationController {
     }
 
     private List<Info> getInfosFor(@RequestBody TranslationRequest request) {
-        return infoServiceResolver.resolve(request.getFromLanguage())
+        return infoServiceResolver.resolve(request.getFromLanguage(), request.getInfoTypes())
                 .stream()
                 .map(infoService -> infoService.search(request))
                 .collect(Collectors.toList());

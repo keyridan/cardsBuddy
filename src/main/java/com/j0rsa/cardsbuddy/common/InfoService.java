@@ -9,4 +9,6 @@ public interface InfoService<T extends Info> {
     T search(TranslationRequest request);
 
     List<Language.Code> languages();
+
+    InfoProvider.Code providerCode();
 }

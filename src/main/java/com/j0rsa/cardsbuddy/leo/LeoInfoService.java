@@ -1,5 +1,6 @@
 package com.j0rsa.cardsbuddy.leo;
 
+import com.j0rsa.cardsbuddy.common.InfoProvider;
 import com.j0rsa.cardsbuddy.common.InfoService;
 import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
 import com.j0rsa.cardsbuddy.leo.exceptions.InfoNotFoundException;
@@ -51,6 +52,11 @@ public class LeoInfoService implements InfoService<LeoInfo> {
                 Language.Code.PT,
                 Language.Code.PL
         );
+    }
+
+    @Override
+    public InfoProvider.Code providerCode() {
+        return InfoProvider.Code.LEO;
     }
 
     private Function<List<SideType>, Optional<SideType>> findFirstSideForFromLanguage(Language.Code fromLanguage) {
