@@ -34,13 +34,17 @@ public class LeoInfoService implements InfoService<LeoInfo> {
                 .map(xmlParser::fromXml)
                 .map(XmlInfo::getFirstEntryFirstSectionSidesIfExist)
                 .flatMap(findFirstSideForFromLanguage(request.getFromLanguage()))
-                .map(sideType -> conversionService.convert(sideType, LeoBriefInfo.class))
-                .map(leoBriefInfo -> LeoInfo.builder()
-                        .briefInfo(leoBriefInfo)
+                .map(sideType -> LeoInfo.builder()
+                        .briefInfo(leoBriefInfo(sideType))
                         .url(LeoUrlFactory.createUrl(request))
+                        .title(sideType.getWordType())
                         .build()
                 )
                 .orElseThrow(InfoNotFoundException::new);
+    }
+
+    private LeoBriefInfo leoBriefInfo(SideType sideType) {
+        return conversionService.convert(sideType, LeoBriefInfo.class);
     }
 
     @Override

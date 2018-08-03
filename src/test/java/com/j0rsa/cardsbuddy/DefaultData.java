@@ -170,6 +170,7 @@ public class DefaultData {
     public static LeoInfo.LeoInfoBuilder defaultInfoNoun() {
         return anInfoVerb()
                 .briefInfo(defaultBriefInfoNoun().build())
+                .title("noun")
                 .url("https://dict.leo.org/englisch-deutsch/Pr%C3%BCfung");
     }
 
@@ -183,6 +184,7 @@ public class DefaultData {
     public static LeoInfo.LeoInfoBuilder defaultInfoVerb() {
         return anInfoVerb()
                 .briefInfo(defaultBriefInfoVerb().build())
+                .title("verb")
                 .url("https://dict.leo.org/englisch-deutsch/lesen");
     }
 
@@ -198,8 +200,6 @@ public class DefaultData {
 
     private static LeoBriefInfo.LeoBriefInfoBuilder defaultBriefInfoVerbWithSpace() {
         return LeoBriefInfo.builder()
-                .word("Fähigkeit zu lesen")
-                .form("")
-                .description("");
+                .word("Fähigkeit zu lesen");
     }
 }

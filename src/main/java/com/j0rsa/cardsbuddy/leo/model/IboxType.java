@@ -21,4 +21,10 @@ public class IboxType {
     protected String linguatec;
     @XmlAttribute(name = "ajaxid")
     protected String ajaxid;
+
+    public String getWordType() {
+        return flecttab!= null
+                ? flecttab.stemType
+                : null;
+    }
 }

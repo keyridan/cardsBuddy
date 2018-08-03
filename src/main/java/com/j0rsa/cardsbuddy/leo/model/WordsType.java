@@ -19,7 +19,7 @@ public class WordsType {
 
     String getFirstWord() {
         return word.isEmpty()
-                ? ""
+                ? null
                 : word.get(0);
     }
 }

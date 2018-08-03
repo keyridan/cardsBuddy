@@ -18,6 +18,6 @@ public class IType {
     String getFlectDescription() {
         return m != null
                 ? m.getFlectDescription()
-                : "";
+                : null;
     }
 }

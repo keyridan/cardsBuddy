@@ -28,19 +28,19 @@ public class SmallType {
 
     String getIDescription() {
         return content.isEmpty()
-                ? ""
+                ? null
                 : getITypeValue();
     }
 
     String getSupDescription() {
         return content.isEmpty()
-                ? ""
+                ? null
                 : getSupValue();
     }
 
     public String value() {
         return content.isEmpty()
-                ? ""
+                ? null
                 : getValue();
     }
 
@@ -49,19 +49,19 @@ public class SmallType {
                 .filter(contentElement -> contentElement.getClass().equals(String.class))
                 .findFirst()
                 .map(element -> ((String) element).trim())
-                .orElse("");
+                .orElse(null);
     }
 
     private String getITypeValue() {
         return get(IType.class)
                 .map(value -> ((IType) value).getFlectDescription())
-                .orElse("");
+                .orElse(null);
     }
 
     private String getSupValue() {
         return get(SupType.class)
                 .map(value -> ((SupType) value).getFlectDescription())
-                .orElse("");
+                .orElse(null);
     }
 
     private Optional<Object> get(Class clazz) {

@@ -18,12 +18,12 @@ public class FlecttabrefType {
     String getFlectDescription() {
         return small != null
                 ? small.getIDescription()
-                : "";
+                : null;
     }
 
     String getFlectForm() {
         return small != null
                 ? small.value()
-                : "";
+                : null;
     }
 }

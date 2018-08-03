@@ -20,6 +20,6 @@ public class SupType {
     String getFlectDescription() {
         return m != null
                 ? m.getFlectDescription()
-                : "";
+                : null;
     }
 }

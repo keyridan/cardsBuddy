@@ -18,6 +18,6 @@ public class MType {
     String getFlectDescription() {
         return t != null
                 ? t.getValue()
-                : "";
+                : null;
     }
 }

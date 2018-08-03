@@ -26,18 +26,24 @@ public class SideType {
     public String getFlectDescription() {
         return repr != null
                 ? repr.getFlectDescription()
-                : "";
+                : null;
     }
 
     public String getFlectForm() {
         return repr != null
                 ? repr.getFlectForm()
-                : "";
+                : null;
     }
 
     public String getFirstWord() {
         return words != null
                 ? words.getFirstWord()
-                : "";
+                : null;
+    }
+
+    public String getWordType() {
+        return ibox != null
+                ? ibox.getWordType()
+                : null;
     }
 }

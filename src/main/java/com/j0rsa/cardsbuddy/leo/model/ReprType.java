@@ -24,7 +24,7 @@ public class ReprType {
 
     String getFlectDescription() {
         String description = getIDescription();
-        return description.isEmpty()
+        return description == null
                 ? getSupDescription()
                 : description;
     }
@@ -32,18 +32,18 @@ public class ReprType {
     private String getSupDescription() {
         return small != null
                 ? small.getSupDescription()
-                : "";
+                : null;
     }
 
     private String getIDescription() {
         return flecttabref != null
                 ? flecttabref.getFlectDescription()
-                : "";
+                : null;
     }
 
     String getFlectForm() {
         return flecttabref != null
                 ? flecttabref.getFlectForm()
-                : "";
+                : null;
     }
 }
