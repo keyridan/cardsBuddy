@@ -29,11 +29,9 @@ public class FlecVerbToInfoTableConverter implements Converter<VerbFlec, InfoTab
             Title title = addTitle(table, flecTables);
 
             flecTables.getTables().forEach(flecTable -> {
-                flecTable.getFlecRows().forEach(row -> {
-                    SmallTitledRows smallTitledRows = addSmallTitledRow(title, flecTable);
+                SmallTitledRows smallTitledRows = addSmallTitledRow(title, flecTable);
 
-                    addInfoRow(smallTitledRows, row);
-                });
+                flecTable.getFlecRows().forEach(row -> addInfoRow(smallTitledRows, row));
             });
         };
 
