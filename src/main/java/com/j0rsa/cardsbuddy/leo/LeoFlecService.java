@@ -2,6 +2,8 @@ package com.j0rsa.cardsbuddy.leo;
 
 import com.j0rsa.cardsbuddy.common.InfoTable;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.Flec;
+import com.j0rsa.cardsbuddy.controller.model.leo.flec.noun.NounFlec;
+import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlec;
 import com.j0rsa.cardsbuddy.leo.exceptions.InfoParseException;
 import com.j0rsa.cardsbuddy.leo.model.flec.BodyType;
 import com.j0rsa.cardsbuddy.leo.model.flec.HtmlType;
@@ -27,12 +29,9 @@ public class LeoFlecService {
     }
 
     private Flec convertFlec(BodyType body) {
-        return conversionService.convert(getTab(body), Flec.class);
+        return body.getVerbtab() != null
+                ? conversionService.convert(body.getVerbtab(), VerbFlec.class)
+                : conversionService.convert(body.getNountab(), NounFlec.class);
     }
 
-    private Object getTab(BodyType body) {
-        return body.getVerbtab() != null
-                ? body.getVerbtab()
-                : body.getNountabType();
-    }
 }

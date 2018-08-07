@@ -28,7 +28,7 @@ public class LeoFlecServiceTest {
     private LeoFlecService leoFlecService;
 
     @Test
-    public void requestFlec() {
+    public void requestVerbFlec() {
         TitleRow titleRow = TitleRow.builder()
                 .value("Konjunktiv")
                 .build();
@@ -44,6 +44,29 @@ public class LeoFlecServiceTest {
                 .highLights(list("ast", "asest"))
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, verbUrlPart);
+
+        assertThat(table.getRows()).contains(titleRow, smallTitleRow, infoRow1, infoRow2);
+    }
+
+    @Test
+    public void requestNounFlec() {
+        TitleRow titleRow = TitleRow.builder()
+                .value("Deklination - bestimmt")
+                .build();
+        SmallTitleRow smallTitleRow = SmallTitleRow.builder()
+                .value("Plural")
+                .build();
+        InfoRow infoRow1 = InfoRow.builder()
+                .title("Genitiv")
+                .value("der Prüfung")
+                .highLights(Lists.newArrayList())
+                .build();
+        InfoRow infoRow2 = InfoRow.builder()
+                .title("Dativ")
+                .value("den Prüfungen")
+                .highLights(list("en"))
+                .build();
+        InfoTable table = leoFlecService.requestFlec(testRequest, nounUrlPart);
 
         assertThat(table.getRows()).contains(titleRow, smallTitleRow, infoRow1, infoRow2);
     }

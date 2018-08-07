@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="html" type="htmlType"/>
+  <xs:complexType name="variantType">
+    <xs:sequence>
+      <xs:element type="caseType" name="case" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="title" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="bodyType">
+    <xs:sequence>
+      <xs:element type="nountabType" name="nountab"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="htmlType">
+    <xs:sequence>
+      <xs:element type="headType" name="head"/>
+      <xs:element type="bodyType" name="body"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="headType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="title"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="explanationType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="expid"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="nounType">
+    <xs:sequence>
+      <xs:element name="art" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="die"/>
+            <xs:enumeration value="der"/>
+            <xs:enumeration value="den"/>
+            <xs:enumeration value="eine"/>
+            <xs:enumeration value="einer"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ending">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+            <xs:enumeration value="en"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="moodType">
+    <xs:sequence>
+      <xs:element type="variantType" name="variant" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="title" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="caseType">
+    <xs:sequence>
+      <xs:element name="comment" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Nominativ"/>
+            <xs:enumeration value="Genitiv"/>
+            <xs:enumeration value="Dativ"/>
+            <xs:enumeration value="Akkusativ"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="radical" minOccurs="0"/>
+      <xs:element type="nounType" name="noun" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="cn" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="nountabType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="gender"/>
+      <xs:element type="explanationType" name="explanation"/>
+      <xs:element type="moodType" name="mood" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="title"/>
+  </xs:complexType>
+</xs:schema>

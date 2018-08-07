@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.converters.flec.verb;
 
-import com.j0rsa.cardsbuddy.controller.model.leo.flec.Flec;
+import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlec;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlecTables;
 import com.j0rsa.cardsbuddy.leo.model.flec.MoodType;
 import com.j0rsa.cardsbuddy.leo.model.flec.verb.VerbtabType;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class VerbTabToVerbFlecConverter implements Converter<VerbtabType, Flec<VerbFlecTables>> {
+public class VerbTabToVerbFlecConverter implements Converter<VerbtabType, VerbFlec> {
     private ConversionService conversionService;
 
     public VerbTabToVerbFlecConverter(ConversionService conversionService) {
@@ -20,8 +20,8 @@ public class VerbTabToVerbFlecConverter implements Converter<VerbtabType, Flec<V
     }
 
     @Override
-    public Flec<VerbFlecTables> convert(VerbtabType verbtabType) {
-        return Flec.<VerbFlecTables>builder()
+    public VerbFlec convert(VerbtabType verbtabType) {
+        return VerbFlec.builder()
                 .flecs(convertTables(verbtabType.getMood()))
                 .build();
     }

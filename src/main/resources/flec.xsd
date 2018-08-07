@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="html" type="htmlType"/>
+  <xs:complexType name="bodyType">
+    <xs:sequence>
+      <xs:element type="verbtabType" name="verbtab"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="htmlType">
+    <xs:sequence>
+      <xs:element type="headType" name="head"/>
+      <xs:element type="bodyType" name="body"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="headType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="title"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="verbtabType">
+    <xs:sequence>
+      <xs:element type="auxType" name="aux"/>
+      <xs:element type="explanationType" name="explanation"/>
+      <xs:element type="moodType" name="mood" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="title"/>
+  </xs:complexType>
+  <xs:complexType name="verbType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="ppron">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="g" use="optional"/>
+              <xs:attribute type="xs:string" name="opt" use="optional"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ending">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="pc" use="optional"/>
+              <xs:attribute type="xs:string" name="o" use="optional"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element type="xs:string" name="pobj"/>
+      <xs:element type="xs:string" name="prep"/>
+      <xs:element type="xs:string" name="rpron"/>
+      <xs:element type="xs:string" name="object"/>
+      <xs:element type="xs:string" name="aux"/>
+      <xs:element type="xs:string" name="raux"/>
+      <xs:element name="pref">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:string" name="pc" use="optional"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="endingType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="pc" use="optional"/>
+        <xs:attribute type="xs:string" name="o" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="caseType">
+    <xs:sequence>
+      <xs:element name="radical">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="l"/>
+            <xs:enumeration value="les"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="verbType" name="verb"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ppronType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="g" use="optional"/>
+        <xs:attribute type="xs:string" name="opt" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="tenseType" mixed="true">
+    <xs:sequence>
+      <xs:element type="caseType" name="case" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="title" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="explanationType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="expid"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="prefType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="pc" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="moodType">
+    <xs:sequence>
+      <xs:element type="tenseType" name="tense" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="title" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="auxType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="comment"/>
+      <xs:element type="xs:string" name="auxiliary"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="a"/>
+  </xs:complexType>
+</xs:schema>

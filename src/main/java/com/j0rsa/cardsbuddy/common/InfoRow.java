@@ -8,10 +8,12 @@ import java.util.List;
 @Data
 public class InfoRow extends Row {
     private List<String> highLights;
+    private String title;
 
     @Builder
-    public InfoRow(String value, List<String> highLights) {
+    private InfoRow(String value, List<String> highLights, String title) {
         super(value);
         this.highLights = highLights;
+        this.title = title;
     }
 }

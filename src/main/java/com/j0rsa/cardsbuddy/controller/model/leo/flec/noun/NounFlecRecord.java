@@ -8,14 +8,11 @@ import java.util.List;
 
 public class NounFlecRecord extends FlecRecord {
     @Getter
-    private String article;
-    @Getter
     private String caseValue;
 
     @Builder
-    private NounFlecRecord(List<String> highlights, String ending, String article, String caseValue) {
-        super(highlights, ending);
-        this.article = article;
+    private NounFlecRecord(List<String> highlights, String value, String caseValue) {
+        super(highlights, value);
         this.caseValue = caseValue;
     }
 }
