@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.converters.flec.noun;
 
-import com.j0rsa.cardsbuddy.common.InfoRow;
+import com.j0rsa.cardsbuddy.common.InfoData;
 import com.j0rsa.cardsbuddy.common.InfoTable;
 import com.j0rsa.cardsbuddy.common.SmallTitleRow;
 import com.j0rsa.cardsbuddy.common.TitleRow;
@@ -26,11 +26,10 @@ public class FlecNounToInfoTableConverter implements Converter<NounFlec, InfoTab
     }
 
     private void addRowsToTable(NounFlec flec, InfoTable table) {
-        Consumer<NounFlecRecord> addRecordRow = row -> addInfoRow(table, row);
-
         Consumer<NounFlecTable> addTableRows = flecTable -> {
-            addSmallTitleRow(table, flecTable);
-            flecTable.getFlecRows().forEach(addRecordRow);
+            SmallTitleRow smallTitleRow = createSmallTitleRow(flecTable);
+            flecTable.getFlecRows().forEach(row -> addInfoRow(smallTitleRow, row));
+            addSmallTitleRow(table, smallTitleRow);
         };
 
         Consumer<NounFlecTables> addTablesRows = flecTables -> {
@@ -48,20 +47,23 @@ public class FlecNounToInfoTableConverter implements Converter<NounFlec, InfoTab
         table.addRow(titleRow);
     }
 
-    private void addSmallTitleRow(InfoTable table, FlecTable verbFlecTable) {
-        SmallTitleRow smallTitleRow = SmallTitleRow.builder()
-                .value(verbFlecTable.getTitle())
-                .build();
+    private void addSmallTitleRow(InfoTable table, SmallTitleRow smallTitleRow) {
         table.addRow(smallTitleRow);
     }
 
-    private void addInfoRow(InfoTable table, NounFlecRecord flecRow) {
-        InfoRow infoRow = InfoRow.builder()
+    private SmallTitleRow createSmallTitleRow(FlecTable verbFlecTable) {
+        return SmallTitleRow.builder()
+                .value(verbFlecTable.getTitle())
+                .build();
+    }
+
+    private void addInfoRow(SmallTitleRow row, NounFlecRecord flecRow) {
+        InfoData infoData = InfoData.builder()
                 .highLights(flecRow.getHighlights())
                 .value(flecRow.getValue())
                 .title(flecRow.getCaseValue())
                 .build();
-        table.addRow(infoRow);
+        row.addData(infoData);
     }
 
 

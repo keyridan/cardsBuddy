@@ -1,10 +1,10 @@
 package com.j0rsa.cardsbuddy.leo;
 
 import com.j0rsa.cardsbuddy.DefaultData;
-import com.j0rsa.cardsbuddy.common.InfoRow;
+import com.j0rsa.cardsbuddy.common.InfoData;
 import com.j0rsa.cardsbuddy.common.InfoTable;
+import com.j0rsa.cardsbuddy.common.Row;
 import com.j0rsa.cardsbuddy.common.SmallTitleRow;
-import com.j0rsa.cardsbuddy.common.TitleRow;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,46 +31,48 @@ public class LeoFlecServiceTest {
 
     @Test
     public void requestVerbFlec() {
-        TitleRow titleRow = TitleRow.builder()
-                .value("Konjunktiv")
-                .build();
-        SmallTitleRow smallTitleRow = SmallTitleRow.builder()
-                .value("Konjunktiv I/II - Futur II")
-                .build();
-        InfoRow infoRow1 = InfoRow.builder()
+        String titleRowValue = "Konjunktiv";
+        String smallTitleRowValue = "Konjunktiv I/II - Futur II";
+
+        InfoData infoData1 = InfoData.builder()
                 .value("er/sie/es werde/würde gelesen haben")
                 .highLights(list("ge", "esen"))
                 .build();
-        InfoRow infoRow2 = InfoRow.builder()
+        InfoData infoData2 = InfoData.builder()
                 .value("du last/lasest")
                 .highLights(list("ast", "asest"))
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, verbUrlPart);
 
-        assertThat(table.getRows()).contains(titleRow, smallTitleRow, infoRow1, infoRow2);
+        assertThat(table.getRows()).extracting(Row::getValue).contains(titleRowValue, smallTitleRowValue);
+        assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 
     @Test
     public void requestNounFlec() {
-        TitleRow titleRow = TitleRow.builder()
-                .value("Deklination - bestimmt")
-                .build();
-        SmallTitleRow smallTitleRow = SmallTitleRow.builder()
-                .value("Plural")
-                .build();
-        InfoRow infoRow1 = InfoRow.builder()
+        String titleRowValue = "Deklination - bestimmt";
+        String smallTitleRowValue = "Plural";
+        InfoData infoData1 = InfoData.builder()
                 .title("Genitiv")
                 .value("der Prüfung")
                 .highLights(Lists.newArrayList())
                 .build();
-        InfoRow infoRow2 = InfoRow.builder()
+        InfoData infoData2 = InfoData.builder()
                 .title("Dativ")
                 .value("den Prüfungen")
                 .highLights(list("en"))
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, nounUrlPart);
 
-        assertThat(table.getRows()).contains(titleRow, smallTitleRow, infoRow1, infoRow2);
+        assertThat(table.getRows()).extracting(Row::getValue).contains(titleRowValue, smallTitleRowValue);
+        assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
+    }
+
+    private List<InfoData> extractedInfoData(InfoTable table) {
+        return table.getRows().stream()
+                .filter(row -> row instanceof SmallTitleRow)
+                .flatMap(row -> ((SmallTitleRow) row).getInfoData().stream())
+                .collect(Collectors.toList());
     }
 
     private ArrayList<String> list(String... values) {

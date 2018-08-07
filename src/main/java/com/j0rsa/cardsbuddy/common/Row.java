@@ -9,7 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Info.class, name = "INFO"),
         @JsonSubTypes.Type(value = SmallTitleRow.class, name = "SMALL_TITLE"),
         @JsonSubTypes.Type(value = TitleRow.class, name = "TITLE"),
 })

@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.converters.flec.verb;
 
-import com.j0rsa.cardsbuddy.common.InfoRow;
+import com.j0rsa.cardsbuddy.common.InfoData;
 import com.j0rsa.cardsbuddy.common.InfoTable;
 import com.j0rsa.cardsbuddy.common.SmallTitleRow;
 import com.j0rsa.cardsbuddy.common.TitleRow;
@@ -24,11 +24,10 @@ public class FlecVerbToInfoTableConverter implements Converter<VerbFlec, InfoTab
     }
 
     private void addRowsToTable(VerbFlec flec, InfoTable table) {
-        Consumer<VerbFlecRecord> addRecordRow = row -> addInfoRow(table, row);
-
         Consumer<VerbFlecTable> addTableRows = flecTable -> {
-            addSmallTitleRow(table, flecTable);
-            flecTable.getFlecRows().forEach(addRecordRow);
+            SmallTitleRow smallTitleRow = createSmallTitleRow(flecTable);
+            flecTable.getFlecRows().forEach(row -> addInfoRow(smallTitleRow, row));
+            addSmallTitleRow(table, smallTitleRow);
         };
 
         Consumer<VerbFlecTables> addTablesRows = flecTables -> {
@@ -46,19 +45,22 @@ public class FlecVerbToInfoTableConverter implements Converter<VerbFlec, InfoTab
         table.addRow(titleRow);
     }
 
-    private void addSmallTitleRow(InfoTable table, VerbFlecTable verbFlecTable) {
-        SmallTitleRow smallTitleRow = SmallTitleRow.builder()
-                .value(verbFlecTable.getTitle())
-                .build();
+    private void addSmallTitleRow(InfoTable table, SmallTitleRow smallTitleRow) {
         table.addRow(smallTitleRow);
     }
 
-    private void addInfoRow(InfoTable table, VerbFlecRecord flecRow) {
-        InfoRow infoRow = InfoRow.builder()
+    private SmallTitleRow createSmallTitleRow(VerbFlecTable verbFlecTable) {
+        return SmallTitleRow.builder()
+                .value(verbFlecTable.getTitle())
+                .build();
+    }
+
+    private void addInfoRow(SmallTitleRow row, VerbFlecRecord flecRow) {
+        InfoData infoData = InfoData.builder()
                 .highLights(flecRow.getHighlights())
                 .value(flecRow.getValue())
                 .build();
-        table.addRow(infoRow);
+        row.addData(infoData);
     }
 
 
