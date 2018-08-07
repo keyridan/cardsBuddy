@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.j0rsa.cardsbuddy.common.Info;
 import com.j0rsa.cardsbuddy.common.InfoProvider;
+import com.j0rsa.cardsbuddy.common.InfoTable;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,5 +18,5 @@ public class LeoInfo implements Info {
     private String title;
     private String description;
     private String url;
-    private String table;
+    private InfoTable table;
 }

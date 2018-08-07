@@ -4,7 +4,6 @@ import com.j0rsa.cardsbuddy.common.InfoProvider;
 import com.j0rsa.cardsbuddy.common.InfoService;
 import com.j0rsa.cardsbuddy.controller.model.leo.LeoInfo;
 import com.j0rsa.cardsbuddy.leo.exceptions.InfoNotFoundException;
-import com.j0rsa.cardsbuddy.leo.model.flec.HtmlType;
 import com.j0rsa.cardsbuddy.leo.model.info.SideType;
 import com.j0rsa.cardsbuddy.leo.model.info.XmlInfo;
 import com.j0rsa.cardsbuddy.translation.model.Language;
@@ -39,7 +38,7 @@ public class LeoInfoService implements InfoService<LeoInfo> {
                         .description(sideType.getDescription())
                         .url(LeoUrlFactory.createUrl(request))
                         .title(sideType.getWordType())
-                        .table(sideType.flectTable())
+                        .table(leoFlecService.requestFlec(request, sideType.flectTable()))
                         .build()
                 )
                 .orElseThrow(InfoNotFoundException::new);

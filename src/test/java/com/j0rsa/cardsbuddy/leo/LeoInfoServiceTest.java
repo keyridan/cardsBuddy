@@ -25,7 +25,7 @@ public class LeoInfoServiceTest {
 
         LeoInfo result = leoInfoService.search(testTranslationRequest);
 
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualToIgnoringGivenFields(expected, "table");
     }
 
     @Test
@@ -36,7 +36,7 @@ public class LeoInfoServiceTest {
 
         LeoInfo result = leoInfoService.search(testTranslationRequest);
 
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualToIgnoringGivenFields(expected, "table");
     }
 
     @Test

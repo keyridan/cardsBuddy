@@ -4,7 +4,6 @@ import com.j0rsa.cardsbuddy.common.InfoTable;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.Flec;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.noun.NounFlec;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlec;
-import com.j0rsa.cardsbuddy.leo.exceptions.InfoParseException;
 import com.j0rsa.cardsbuddy.leo.model.flec.BodyType;
 import com.j0rsa.cardsbuddy.leo.model.flec.HtmlType;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
@@ -25,7 +24,7 @@ public class LeoFlecService {
                 .map(flecXml -> conversionService.convert(flecXml, HtmlType.class))
                 .map(flecTableObject -> convertFlec(flecTableObject.getBody()))
                 .map(flec -> conversionService.convert(flec, InfoTable.class))
-                .orElseThrow(InfoParseException::new);
+                .orElse(null);
     }
 
     private Flec convertFlec(BodyType body) {
