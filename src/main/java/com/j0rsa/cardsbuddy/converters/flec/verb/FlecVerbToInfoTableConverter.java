@@ -2,12 +2,13 @@ package com.j0rsa.cardsbuddy.converters.flec.verb;
 
 import com.j0rsa.cardsbuddy.common.InfoData;
 import com.j0rsa.cardsbuddy.common.InfoTable;
-import com.j0rsa.cardsbuddy.common.SmallTitleRow;
-import com.j0rsa.cardsbuddy.common.TitleRow;
+import com.j0rsa.cardsbuddy.common.SmallTitledRows;
+import com.j0rsa.cardsbuddy.common.Title;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlec;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlecRecord;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlecTable;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlecTables;
+import org.assertj.core.util.Lists;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -24,38 +25,40 @@ public class FlecVerbToInfoTableConverter implements Converter<VerbFlec, InfoTab
     }
 
     private void addRowsToTable(VerbFlec flec, InfoTable table) {
-        Consumer<VerbFlecTable> addTableRows = flecTable -> {
-            SmallTitleRow smallTitleRow = createSmallTitleRow(flecTable);
-            flecTable.getFlecRows().forEach(row -> addInfoRow(smallTitleRow, row));
-            addSmallTitleRow(table, smallTitleRow);
-        };
-
         Consumer<VerbFlecTables> addTablesRows = flecTables -> {
-            addTitleRow(table, flecTables);
-            flecTables.getTables().forEach(addTableRows);
+            Title title = addTitle(table, flecTables);
+
+            flecTables.getTables().forEach(flecTable -> {
+                flecTable.getFlecRows().forEach(row -> {
+                    SmallTitledRows smallTitledRows = addSmallTitledRow(title, flecTable);
+
+                    addInfoRow(smallTitledRows, row);
+                });
+            });
         };
 
         flec.getFlecs().forEach(addTablesRows);
     }
 
-    private void addTitleRow(InfoTable table, VerbFlecTables flecTables) {
-        TitleRow titleRow = TitleRow.builder()
+    private Title addTitle(InfoTable table, VerbFlecTables flecTables) {
+        Title title = Title.builder()
                 .value(flecTables.getTitle())
+                .rows(Lists.newArrayList())
                 .build();
-        table.addRow(titleRow);
+        table.addRow(title);
+        return title;
     }
 
-    private void addSmallTitleRow(InfoTable table, SmallTitleRow smallTitleRow) {
-        table.addRow(smallTitleRow);
-    }
-
-    private SmallTitleRow createSmallTitleRow(VerbFlecTable verbFlecTable) {
-        return SmallTitleRow.builder()
-                .value(verbFlecTable.getTitle())
+    private SmallTitledRows addSmallTitledRow(Title title, VerbFlecTable flecTable) {
+        SmallTitledRows smallTitledRows = SmallTitledRows.builder()
+                .value(flecTable.getTitle())
+                .infoData(Lists.newArrayList())
                 .build();
+        title.addRows(smallTitledRows);
+        return smallTitledRows;
     }
 
-    private void addInfoRow(SmallTitleRow row, VerbFlecRecord flecRow) {
+    private void addInfoRow(SmallTitledRows row, VerbFlecRecord flecRow) {
         InfoData infoData = InfoData.builder()
                 .highLights(flecRow.getHighlights())
                 .value(flecRow.getValue())

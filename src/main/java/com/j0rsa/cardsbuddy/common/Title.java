@@ -8,9 +8,12 @@ import java.util.List;
 
 @Data
 @Builder
-public class InfoData {
+public class Title {
     private String value;
     @Builder.Default
-    private List<String> highLights = Lists.newArrayList();
-    private String title;
+    private List<SmallTitledRows> rows = Lists.newArrayList();
+
+    public void addRows(SmallTitledRows rows) {
+        this.rows.add(rows);
+    }
 }

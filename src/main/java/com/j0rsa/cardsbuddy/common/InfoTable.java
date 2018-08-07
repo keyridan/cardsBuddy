@@ -7,9 +7,9 @@ import java.util.List;
 
 @Data
 public class InfoTable {
-    List<Row> rows = Lists.newArrayList();
+    List<Title> rows = Lists.newArrayList();
 
-    public void addRow(Row row) {
+    public void addRow(Title row) {
         this.rows.add(row);
     }
 }

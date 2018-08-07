@@ -7,14 +7,11 @@ import org.assertj.core.util.Lists;
 import java.util.List;
 
 @Data
-public class SmallTitleRow extends Row {
-
+@Builder
+public class SmallTitledRows {
+    @Builder.Default
     private List<InfoData> infoData = Lists.newArrayList();
-
-    @Builder
-    public SmallTitleRow(String value) {
-        super(value);
-    }
+    private String value;
 
     public void addData(InfoData data) {
         this.infoData.add(data);

@@ -3,8 +3,8 @@ package com.j0rsa.cardsbuddy.leo;
 import com.j0rsa.cardsbuddy.DefaultData;
 import com.j0rsa.cardsbuddy.common.InfoData;
 import com.j0rsa.cardsbuddy.common.InfoTable;
-import com.j0rsa.cardsbuddy.common.Row;
-import com.j0rsa.cardsbuddy.common.SmallTitleRow;
+import com.j0rsa.cardsbuddy.common.SmallTitledRows;
+import com.j0rsa.cardsbuddy.common.Title;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,7 +45,8 @@ public class LeoFlecServiceTest {
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, verbUrlPart);
 
-        assertThat(table.getRows()).extracting(Row::getValue).contains(titleRowValue, smallTitleRowValue);
+        assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
         assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 
@@ -64,14 +66,24 @@ public class LeoFlecServiceTest {
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, nounUrlPart);
 
-        assertThat(table.getRows()).extracting(Row::getValue).contains(titleRowValue, smallTitleRowValue);
+        assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
         assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 
     private List<InfoData> extractedInfoData(InfoTable table) {
+        return extractedTitledRows(table)
+                .flatMap(titledRows -> titledRows.getInfoData().stream())
+                .collect(Collectors.toList());
+    }
+
+    private Stream<SmallTitledRows> extractedTitledRows(InfoTable table) {
         return table.getRows().stream()
-                .filter(row -> row instanceof SmallTitleRow)
-                .flatMap(row -> ((SmallTitleRow) row).getInfoData().stream())
+                .flatMap(title -> title.getRows().stream());
+    }
+
+    private List<SmallTitledRows> extractedTitledRow(InfoTable table) {
+        return extractedTitledRows(table)
                 .collect(Collectors.toList());
     }
 
