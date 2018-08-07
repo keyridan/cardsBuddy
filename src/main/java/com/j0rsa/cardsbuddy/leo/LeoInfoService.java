@@ -2,13 +2,15 @@ package com.j0rsa.cardsbuddy.leo;
 
 import com.j0rsa.cardsbuddy.common.InfoProvider;
 import com.j0rsa.cardsbuddy.common.InfoService;
-import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
+import com.j0rsa.cardsbuddy.controller.model.leo.LeoInfo;
 import com.j0rsa.cardsbuddy.leo.exceptions.InfoNotFoundException;
-import com.j0rsa.cardsbuddy.leo.model.SideType;
-import com.j0rsa.cardsbuddy.leo.model.XmlInfo;
+import com.j0rsa.cardsbuddy.leo.model.flec.HtmlType;
+import com.j0rsa.cardsbuddy.leo.model.info.SideType;
+import com.j0rsa.cardsbuddy.leo.model.info.XmlInfo;
 import com.j0rsa.cardsbuddy.translation.model.Language;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.assertj.core.util.Lists;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,22 +21,25 @@ import java.util.function.Predicate;
 @Service
 public class LeoInfoService implements InfoService<LeoInfo> {
 
-    private XmlParser xmlParser;
+    private ConversionService conversionService;
+    private LeoFlecService leoFlecService;
 
-    public LeoInfoService(XmlParser xmlParser) {
-        this.xmlParser = xmlParser;
+    public LeoInfoService(ConversionService conversionService, LeoFlecService leoFlecService) {
+        this.conversionService = conversionService;
+        this.leoFlecService = leoFlecService;
     }
 
     @Override
     public LeoInfo search(TranslationRequest request) {
         return LeoInfoSearcher.search(request)
-                .map(xmlParser::fromXml)
+                .map(xmlInfo -> conversionService.convert(xmlInfo, XmlInfo.class))
                 .map(XmlInfo::getFirstEntryFirstSectionSidesIfExist)
                 .flatMap(findFirstSideForFromLanguage(request.getFromLanguage()))
                 .map(sideType -> LeoInfo.builder()
                         .description(sideType.getDescription())
                         .url(LeoUrlFactory.createUrl(request))
                         .title(sideType.getWordType())
+                        .table(sideType.flectTable())
                         .build()
                 )
                 .orElseThrow(InfoNotFoundException::new);

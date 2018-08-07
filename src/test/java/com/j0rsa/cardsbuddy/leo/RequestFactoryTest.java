@@ -5,11 +5,13 @@ import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.apache.http.client.fluent.Request;
 import org.junit.Test;
 
+import static com.j0rsa.cardsbuddy.DefaultData.*;
 import static com.j0rsa.cardsbuddy.translation.model.TranslationRequest.builder;
 import static org.apache.http.client.fluent.Request.Get;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RequestFactoryTest {
+    private String testFlecTableUrlPart = "?kvz=test";
 
     @Test
     public void testCreateWhenTranslateFromEnToDe() {
@@ -49,6 +51,41 @@ public class RequestFactoryTest {
                 .build();
 
         Request request = RequestFactory.infoRequest(testTranslationRequest);
+
+        assertThat(request.toString()).isEqualTo(Get(expectedUri).toString());
+    }
+
+    @Test
+    public void testFlecTableRequestWhenFromEnToDe() {
+        String expectedUri = "https://dict.leo.org/dictQuery/m-vocab/ende/stemming.xml?kvz=test";
+        final TranslationRequest testTranslationRequest = requestFromEnToDe()
+                .build();
+
+        Request request = RequestFactory.flecTableRequest(testFlecTableUrlPart, testTranslationRequest);
+
+        assertThat(request.toString()).isEqualTo(Get(expectedUri).toString());
+    }
+
+    @Test
+    public void testFlecTableRequestWhenFromEnToDeWhenFromDeToEnThenLanguagesPropertiesAreTheSameAsFromEnToDe() {
+        String expectedUri = "https://dict.leo.org/dictQuery/m-vocab/ende/stemming.xml?kvz=test";
+        final TranslationRequest testTranslationRequest = requestFromDeToEn()
+                .build();
+
+        Request request = RequestFactory.flecTableRequest(testFlecTableUrlPart, testTranslationRequest);
+
+        assertThat(request.toString()).isEqualTo(Get(expectedUri).toString());
+    }
+
+    @Test
+    public void testFlecTableRequestWhenTranslateFromoFrToEnThenSecondLanguageIsDe() {
+        String expectedUri = "https://dict.leo.org/dictQuery/m-vocab/frde/stemming.xml?kvz=test";
+        final TranslationRequest testTranslationRequest = requestToEn()
+                .fromLanguage(Language.Code.FR)
+                .word("pomme")
+                .build();
+
+        Request request = RequestFactory.flecTableRequest(testFlecTableUrlPart, testTranslationRequest);
 
         assertThat(request.toString()).isEqualTo(Get(expectedUri).toString());
     }

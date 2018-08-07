@@ -1,7 +1,7 @@
 package com.j0rsa.cardsbuddy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
+import com.j0rsa.cardsbuddy.controller.model.leo.LeoInfo;
 import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
 import com.j0rsa.cardsbuddy.translation.model.*;
 
@@ -55,6 +55,11 @@ public class DefaultData {
                 .fromLanguage(Language.Code.DE)
                 .toLanguage(Language.Code.EN)
                 .word("Prüfung");
+    }
+
+    public static TranslationRequest.TranslationRequestBuilder requestToEn() {
+        return aTranslationRequest()
+                .toLanguage(Language.Code.EN);
     }
 
     public static TranslationRequest.TranslationRequestBuilder aTranslationRequest() {

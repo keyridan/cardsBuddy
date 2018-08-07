@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.leo;
 
-import com.j0rsa.cardsbuddy.controller.model.LeoInfo;
+import com.j0rsa.cardsbuddy.controller.model.leo.LeoInfo;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
