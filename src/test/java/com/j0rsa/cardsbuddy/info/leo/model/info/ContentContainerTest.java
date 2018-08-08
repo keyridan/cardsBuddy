@@ -29,6 +29,7 @@ public class ContentContainerTest {
 
     @Test
     public void parseValuesByNamesWhenValueIsEmpty() {
+        Tuple2<String, List<String>> expectedValue = tuple("ending", Lists.newArrayList());
         ObjectFactory factory = factory();
         VerbType verbType = factory.createVerbTypeWithValue();
 
@@ -37,7 +38,7 @@ public class ContentContainerTest {
 
         List<Tuple2<String, List<String>>> endings = verbType.parseValuesByNames(Lists.newArrayList("ending"));
 
-        assertThat(endings).isEmpty();
+        assertThat(endings).containsExactly(expectedValue);
     }
 
     private void addElements(VerbType verbType, JAXBElement... elements) {
