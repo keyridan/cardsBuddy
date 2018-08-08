@@ -22,7 +22,7 @@ public abstract class ContentContainer implements ValueContainer {
                 )
                 .filter(string -> {
                     String strangeString = " ";
-                    return !string.matches(strangeString);
+                    return string != null && !string.matches(strangeString);
                 })
                 .collect(Collectors.joining(" "))
                 .replaceAll("\\s+(?=\\p{Punct})", "")

@@ -46,7 +46,7 @@ class TinyCardsRequest {
         CheckedFunction0<String> writeValue = () -> mapper().writeValueAsString(request);
 
         String json = Try.of(writeValue)
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .getOrElseThrow(JsonConversionException::new);
         log.debug("json: " + json);
         this.request.bodyString(json, ContentType.APPLICATION_JSON);
@@ -55,7 +55,7 @@ class TinyCardsRequest {
 
     Optional<TinyCardsResponse> execute() {
         return Try.of(() -> executorWithEmptyCookieStore().execute(this.request))
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .map(TinyCardsResponse::create)
                 .toJavaOptional();
     }

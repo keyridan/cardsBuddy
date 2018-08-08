@@ -17,6 +17,8 @@ public class DomainType implements ValueContainer {
 
     @Override
     public String parseValues() {
-        return small.parseValues();
+        return small != null
+                ? small.parseValues()
+                : null;
     }
 }

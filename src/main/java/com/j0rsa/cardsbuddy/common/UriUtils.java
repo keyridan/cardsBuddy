@@ -9,7 +9,7 @@ import static java.net.URLEncoder.encode;
 public class UriUtils {
     public static String encodeUrl(String url) {
         return Try.of(() -> encode(url, "UTF-8"))
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .getOrElse("");
     }
 }

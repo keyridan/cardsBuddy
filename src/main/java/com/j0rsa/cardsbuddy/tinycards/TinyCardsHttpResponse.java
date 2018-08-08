@@ -58,7 +58,7 @@ class TinyCardsHttpResponse {
 
     Optional<String> returnContent() {
         return Try.of(() -> EntityUtils.toString(response.getEntity()))
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .peek(content -> log.debug("returnContent: " + content))
                 .toJavaOptional();
     }

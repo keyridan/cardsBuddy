@@ -19,6 +19,8 @@ public class SupType implements ValueContainer {
 
     @Override
     public String parseValues() {
-        return m.parseValues();
+        return m != null
+                ? m.parseValues()
+                : null;
     }
 }

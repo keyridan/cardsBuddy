@@ -17,6 +17,8 @@ public class MType implements ValueContainer {
 
     @Override
     public String parseValues() {
-        return t.getValue();
+        return t != null
+                ? t.getValue()
+                : null;
     }
 }

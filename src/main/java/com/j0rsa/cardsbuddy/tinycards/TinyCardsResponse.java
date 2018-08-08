@@ -20,7 +20,7 @@ class TinyCardsResponse {
 
     Optional<TinyCardsHttpResponse> returnResponse() {
         return Try.of(response::returnResponse)
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .peek(response -> log.info("returnResponse HttpResponse: " + response.toString()))
                 .map(TinyCardsHttpResponse::create)
                 .toJavaOptional();

@@ -7,6 +7,7 @@ import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import io.vavr.CheckedFunction0;
 import io.vavr.Tuple2;
 import io.vavr.control.Try;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class InfoSearcher {
     private final static String INFO_SERVICE_ERROR_TEMPLATE = "%s: %s";
     private InfoServiceResolver infoServiceResolver;
@@ -28,6 +30,7 @@ public class InfoSearcher {
         List<String> mesages = Lists.newArrayList();
 
         List<Info> infos = Try.of(resolveInfoService(request))
+                .onFailure(e -> log.error("Error", e))
                 .onFailure(e -> mesages.add(e.toString()))
                 .map(searchInfosAndAddErrorMessages(request, mesages))
                 .getOrElse(Lists.newArrayList());
@@ -49,6 +52,7 @@ public class InfoSearcher {
 
     private Optional<Info> searchInfo(List<String> mesages, InfoService infoService, TranslationRequest request) {
         return Try.of(() -> infoService.search(request))
+                .onFailure(e -> log.error("Error", e))
                 .onFailure(e -> mesages.add(errorMessage(infoService, e.toString())))
                 .toJavaOptional();
     }

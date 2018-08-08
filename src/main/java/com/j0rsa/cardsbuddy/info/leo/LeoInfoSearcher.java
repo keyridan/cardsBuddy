@@ -25,10 +25,10 @@ class LeoInfoSearcher {
 
     private static Optional<String> makeRequest(Request request) {
         return of(request::execute)
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .mapTry(response -> response.returnContent().asString())
                 .peek(log::debug)
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .toJavaOptional();
     }
 }

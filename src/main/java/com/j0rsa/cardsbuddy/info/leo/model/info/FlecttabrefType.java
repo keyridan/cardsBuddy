@@ -12,11 +12,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "flecttabrefType", propOrder = {
         "small"
 })
-public class FlecttabrefType implements ValueContainer{
+public class FlecttabrefType implements ValueContainer {
     protected SmallType small;
 
     @Override
     public String parseValues() {
-        return small.parseValues();
+        return small != null
+                ? small.parseValues()
+                : null;
     }
 }

@@ -21,9 +21,9 @@ public abstract class XmlUnmarshaller<T, V> {
     protected Try<T> unmarshall(String xml) {
         StringReader reader = new StringReader(xml);
         return Try.of(() -> unmarshaller.unmarshal(reader))
-                .onFailure(e -> log.error(e.toString()))
+                .onFailure(e -> log.error("Error", e))
                 .map(this::getValue)
-                .onFailure(e -> log.error(e.toString()));
+                .onFailure(e -> log.error("Error", e));
     }
 
     private T getValue(Object element) {
