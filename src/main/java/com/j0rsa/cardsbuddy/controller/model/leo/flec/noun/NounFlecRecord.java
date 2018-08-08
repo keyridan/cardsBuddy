@@ -1,5 +1,6 @@
 package com.j0rsa.cardsbuddy.controller.model.leo.flec.noun;
 
+import com.j0rsa.cardsbuddy.common.Highlight;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.FlecRecord;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ public class NounFlecRecord extends FlecRecord {
     private String caseValue;
 
     @Builder
-    private NounFlecRecord(List<String> highlights, String value, String caseValue) {
+    private NounFlecRecord(List<Highlight> highlights, String value, String caseValue) {
         super(highlights, value);
         this.caseValue = caseValue;
     }

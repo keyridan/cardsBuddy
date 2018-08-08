@@ -11,6 +11,6 @@ import java.util.List;
 public class InfoData {
     private String value;
     @Builder.Default
-    private List<String> highLights = Lists.newArrayList();
+    private List<Highlight> highlights = Lists.newArrayList();
     private String title;
 }

@@ -58,7 +58,7 @@ public class FlecVerbToInfoTableConverter implements Converter<VerbFlec, InfoTab
 
     private void addInfoRow(SmallTitledRows row, VerbFlecRecord flecRow) {
         InfoData infoData = InfoData.builder()
-                .highLights(flecRow.getHighlights())
+                .highlights(flecRow.getHighlights())
                 .value(flecRow.getValue())
                 .build();
         row.addData(infoData);

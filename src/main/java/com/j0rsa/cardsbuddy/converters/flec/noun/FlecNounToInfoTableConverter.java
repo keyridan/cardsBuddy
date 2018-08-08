@@ -55,7 +55,7 @@ public class FlecNounToInfoTableConverter implements Converter<NounFlec, InfoTab
 
     private void addInfoRow(SmallTitledRows row, NounFlecRecord flecRow) {
         InfoData infoData = InfoData.builder()
-                .highLights(flecRow.getHighlights())
+                .highlights(flecRow.getHighlights())
                 .value(flecRow.getValue())
                 .title(flecRow.getCaseValue())
                 .build();

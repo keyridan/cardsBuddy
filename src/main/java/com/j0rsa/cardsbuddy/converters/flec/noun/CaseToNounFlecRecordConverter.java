@@ -1,5 +1,6 @@
 package com.j0rsa.cardsbuddy.converters.flec.noun;
 
+import com.j0rsa.cardsbuddy.common.Highlight;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.noun.NounFlecRecord;
 import com.j0rsa.cardsbuddy.info.leo.model.flec.CaseType;
 import com.j0rsa.cardsbuddy.info.leo.model.flec.noun.NounType;
@@ -17,7 +18,7 @@ public class CaseToNounFlecRecordConverter implements Converter<CaseType, NounFl
         return caseType.nounExist()
                 ? NounFlecRecord.builder()
                 .caseValue(caseType.getCn())
-                .highlights(highLights(caseType.getNoun()))
+                .highlights(highLights(caseType.getNoun(), caseType.getRadical()))
                 .value(value(caseType.getNoun(), caseType.getRadical()))
                 .build()
                 : null;
@@ -45,10 +46,17 @@ public class CaseToNounFlecRecordConverter implements Converter<CaseType, NounFl
                 : "";
     }
 
-    private List<String> highLights(NounType noun) {
+    private List<Highlight> highLights(NounType noun, String radical) {
         return notEmpty(noun)
-                ? Lists.newArrayList(noun.getEnding())
+                ? Lists.newArrayList(createHighlight(noun, radical))
                 : Lists.newArrayList();
+    }
+
+    private Highlight createHighlight(NounType noun, String radical) {
+        return Highlight.builder()
+                .wordPart(String.format("%s%s", radical, noun.getEnding()))
+                .value(noun.getEnding())
+                .build();
     }
 
     private boolean notEmpty(NounType noun) {

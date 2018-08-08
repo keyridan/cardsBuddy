@@ -1,5 +1,6 @@
 package com.j0rsa.cardsbuddy.converters.flec.verb;
 
+import com.j0rsa.cardsbuddy.common.Highlight;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlecRecord;
 import com.j0rsa.cardsbuddy.info.leo.model.flec.CaseType;
 import com.j0rsa.cardsbuddy.info.leo.model.flec.verb.VerbType;
@@ -9,6 +10,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -24,7 +26,7 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
     public VerbFlecRecord convert(CaseType aCase) {
         return aCase.verbExist()
                 ? VerbFlecRecord.builder()
-                .highlights(highlights(aCase.getVerb()))
+                .highlights(highlights(aCase.getVerb(), aCase.getRadical()))
                 .value(value(aCase.getVerb(), aCase.getRadical()))
                 .build()
                 : null;
@@ -33,7 +35,7 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
     private String value(VerbType verb, String radical) {
         return verb.parseValuesByNames(namesToParse())
                 .stream()
-                .map(collectValuesWithRadicalIfNeeded())
+                .map(this::collectValuesWithRadicalsIfNeeded)
                 .filter(elementIsEmpty())
                 .collect(Collectors.joining(" "))
                 .replaceAll(radicalMaskForPrefAndEnding, radical)
@@ -41,8 +43,8 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
                 .replaceAll("\\)/\\(", "/");
     }
 
-    private Function<Tuple2<String, List<String>>, String> collectValuesWithRadicalIfNeeded() {
-        return namedElement -> namedElement._2.isEmpty()
+    private String collectValuesWithRadicalsIfNeeded(Tuple2<String, List<String>> namedElement) {
+        return namedElement._2.isEmpty()
                 ? addRadicalIfNeeded(namedElement, "")
                 : namedElement._2.stream()
                 .map(element -> addRadicalIfNeeded(namedElement, element))
@@ -71,11 +73,32 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
         );
     }
 
-    private List<String> highlights(VerbType verb) {
+    private List<Highlight> highlights(VerbType verb, String radical) {
         return verb.parseValuesByNames(Lists.newArrayList("pref", "ending")).stream()
-                .flatMap(namedElement -> namedElement._2.stream())
-                .filter(elementIsEmpty())
+                .map(collectHighlights(radical))
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+    }
+
+    private Function<Tuple2<String, List<String>>, List<Highlight>> collectHighlights(String radical) {
+        return namedElement -> namedElement._2.stream()
+                .filter(elementIsEmpty())
+                .map(element -> createHighlight(radical, namedElement, element))
+                .collect(Collectors.toList());
+    }
+
+    private Highlight createHighlight(String radical, Tuple2<String, List<String>> namedElement, String element) {
+        String wordPart = wordPartFromElement(radical, namedElement, element);
+        return Highlight.builder()
+                .wordPart(wordPart)
+                .value(element)
+                .build();
+    }
+
+    private String wordPartFromElement(String radical, Tuple2<String, List<String>> namedElement, String element) {
+        return addRadicalIfNeeded(namedElement, element)
+                .replaceAll(radicalMaskForPrefAndEnding, radical)
+                .replaceAll(radicalMask, radical);
     }
 
     private Predicate<String> elementIsEmpty() {

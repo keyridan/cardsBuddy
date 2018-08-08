@@ -1,10 +1,7 @@
 package com.j0rsa.cardsbuddy.info.leo;
 
 import com.j0rsa.cardsbuddy.DefaultData;
-import com.j0rsa.cardsbuddy.common.InfoData;
-import com.j0rsa.cardsbuddy.common.InfoTable;
-import com.j0rsa.cardsbuddy.common.SmallTitledRows;
-import com.j0rsa.cardsbuddy.common.Title;
+import com.j0rsa.cardsbuddy.common.*;
 import com.j0rsa.cardsbuddy.translation.model.Language;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.assertj.core.util.Lists;
@@ -39,11 +36,11 @@ public class LeoFlecServiceTest {
 
         InfoData infoData1 = InfoData.builder()
                 .value("er/sie/es werde/würde gelesen haben")
-                .highLights(list("ge", "esen"))
+                .highlights(list(highlight("ge", "gel"), highlight("esen", "lesen")))
                 .build();
         InfoData infoData2 = InfoData.builder()
                 .value("du last/lasest")
-                .highLights(list("ast", "asest"))
+                .highlights(list(highlight("ast", "last"), highlight("asest", "lasest")))
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, verbUrlPart);
 
@@ -59,12 +56,12 @@ public class LeoFlecServiceTest {
         InfoData infoData1 = InfoData.builder()
                 .title("Genitiv")
                 .value("der Prüfung")
-                .highLights(list())
+                .highlights(list())
                 .build();
         InfoData infoData2 = InfoData.builder()
                 .title("Dativ")
                 .value("den Prüfungen")
-                .highLights(list("en"))
+                .highlights(list(highlight("en", "Prüfungen")))
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, nounUrlPart);
 
@@ -85,11 +82,15 @@ public class LeoFlecServiceTest {
         String smallTitleRowValue = "Futur";
         InfoData infoData1 = InfoData.builder()
                 .value("(я) буду читать")
-                .highLights(list("ать"))
+                .highlights(list(highlight("ать", "читать")))
                 .build();
         InfoData infoData2 = InfoData.builder()
                 .value("(он/она/оно) читал/читала/читало бы")
-                .highLights(list("ал", "ала", "ало"))
+                .highlights(list(
+                        highlight("ал", "читал"),
+                        highlight("ала", "читала"),
+                        highlight("ало", "читало"))
+                )
                 .build();
         InfoTable table = leoFlecService.requestFlec(request, urlPart);
 
@@ -110,11 +111,11 @@ public class LeoFlecServiceTest {
         String smallTitleRowValue = "Simple present";
         InfoData infoData1 = InfoData.builder()
                 .value("I read")
-                .highLights(list())
+                .highlights(list())
                 .build();
         InfoData infoData2 = InfoData.builder()
                 .value("he/she/it has read")
-                .highLights(list())
+                .highlights(list())
                 .build();
         InfoTable table = leoFlecService.requestFlec(request, urlPart);
 
@@ -139,7 +140,14 @@ public class LeoFlecServiceTest {
                 .collect(Collectors.toList());
     }
 
-    private ArrayList<String> list(String... values) {
+    private ArrayList<Highlight> list(Highlight... values) {
         return Lists.newArrayList(values);
+    }
+
+    private Highlight highlight(String value, String wordPart) {
+        return Highlight.builder()
+                .value(value)
+                .wordPart(wordPart)
+                .build();
     }
 }
