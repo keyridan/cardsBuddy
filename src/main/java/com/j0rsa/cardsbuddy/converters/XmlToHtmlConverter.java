@@ -1,7 +1,7 @@
 package com.j0rsa.cardsbuddy.converters;
 
-import com.j0rsa.cardsbuddy.leo.model.flec.HtmlType;
-import com.j0rsa.cardsbuddy.leo.model.flec.ObjectFactory;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.HtmlType;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.ObjectFactory;
 import com.j0rsa.cardsbuddy.translation.exceptions.ParserException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

@@ -2,8 +2,8 @@ package com.j0rsa.cardsbuddy.converters.flec.noun;
 
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.noun.NounFlecTable;
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.noun.NounFlecTables;
-import com.j0rsa.cardsbuddy.leo.model.flec.MoodType;
-import com.j0rsa.cardsbuddy.leo.model.flec.noun.VariantType;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.MoodType;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.noun.VariantType;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

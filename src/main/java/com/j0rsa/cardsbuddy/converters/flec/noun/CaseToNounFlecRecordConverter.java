@@ -1,8 +1,8 @@
 package com.j0rsa.cardsbuddy.converters.flec.noun;
 
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.noun.NounFlecRecord;
-import com.j0rsa.cardsbuddy.leo.model.flec.CaseType;
-import com.j0rsa.cardsbuddy.leo.model.flec.noun.NounType;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.CaseType;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.noun.NounType;
 import org.assertj.core.util.Lists;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

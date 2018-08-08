@@ -1,8 +1,8 @@
 package com.j0rsa.cardsbuddy.converters.flec.verb;
 
 import com.j0rsa.cardsbuddy.controller.model.leo.flec.verb.VerbFlecRecord;
-import com.j0rsa.cardsbuddy.leo.model.flec.CaseType;
-import com.j0rsa.cardsbuddy.leo.model.flec.verb.VerbType;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.CaseType;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.verb.VerbType;
 import io.vavr.Tuple2;
 import org.assertj.core.util.Lists;
 import org.springframework.core.convert.converter.Converter;

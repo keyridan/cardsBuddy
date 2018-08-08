@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.common;
 
-import com.j0rsa.cardsbuddy.leo.model.flec.ObjectFactory;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.ObjectFactory;
 import io.vavr.Tuple2;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
