@@ -37,6 +37,7 @@ public class ObjectFactory {
     private final static QName _VerbTypePpron_QNAME = new QName("", "ppron");
     private final static QName _VerbTypeObject_QNAME = new QName("", "object");
     private final static QName _TenseTypeCase_QNAME = new QName("", "case");
+    private final static QName _VerbTypePart_QNAME = new QName("", "part");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.j0rsa.cardsbuddy.leo.model.flec
@@ -256,6 +257,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "case", scope = TenseType.class)
     public JAXBElement<CaseType> createTenseTypeCase(CaseType value) {
         return new JAXBElement<CaseType>(_TenseTypeCase_QNAME, CaseType.class, TenseType.class, value);
+    }
+
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     */
+    @XmlElementDecl(namespace = "", name = "part", scope = VerbType.class)
+    public JAXBElement<String> createVerbTypePart(String value) {
+        return new JAXBElement<String>(_VerbTypePart_QNAME, String.class, VerbType.class, value);
     }
 
 }

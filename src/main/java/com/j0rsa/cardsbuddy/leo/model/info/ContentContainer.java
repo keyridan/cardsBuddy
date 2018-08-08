@@ -39,23 +39,6 @@ public abstract class ContentContainer implements ValueContainer {
                 .collect(Collectors.toList());
     }
 
-    public <T> List<T> parseValues(Class<T> clazz) {
-        return getContent().stream()
-                .filter(element -> isJaxbElementAndClass(clazz, element))
-                .map(element -> clazz.cast(getJaxbElementValue(element)))
-                .collect(Collectors.toList());
-    }
-
-    public List<String> parseValuesExcept(List<Class> classes) {
-        return getContent().stream()
-                .filter(element -> isStringOrJaxBElementInClasses(classes, element))
-                .map(contentElement -> isString(contentElement)
-                        ? getStringValue(contentElement)
-                        : getComplexValue(contentElement)
-                )
-                .collect(Collectors.toList());
-    }
-
     private String getComplexValue(Serializable element) {
         Object value = getJaxbElementValue(element);
         return value instanceof String

@@ -74,7 +74,8 @@ public class VerbType extends ContentContainer {
             @XmlElementRef(name = "aux", type = JAXBElement.class, required = false),
             @XmlElementRef(name = "ppron", type = JAXBElement.class, required = false),
             @XmlElementRef(name = "raux", type = JAXBElement.class, required = false),
-            @XmlElementRef(name = "pref", type = JAXBElement.class, required = false)
+            @XmlElementRef(name = "pref", type = JAXBElement.class, required = false),
+            @XmlElementRef(name = "part", type = JAXBElement.class, required = false)
     })
     protected List<Serializable> content = Lists.newArrayList();
 
@@ -224,7 +225,15 @@ public class VerbType extends ContentContainer {
 
         @Override
         public String parseValues() {
-            return value;
+            return opt != null
+                    ? optValue()
+                    : value;
+        }
+
+        private String optValue() {
+            return value != null
+                    ? String.format("(%s)", value)
+                    : null;
         }
 
         /**

@@ -34,7 +34,8 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
                 .map(collectValuesWithRadicalIfNeeded())
                 .collect(Collectors.joining(" "))
                 .replaceAll(radicalMaskForPrefAndEnding, radical)
-                .replaceAll(radicalMask, radical);
+                .replaceAll(radicalMask, radical)
+                .replaceAll("\\)/\\(", "/");
     }
 
     private Function<Tuple2<String, List<String>>, String> collectValuesWithRadicalIfNeeded() {
@@ -61,6 +62,7 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
                 , "ppron"
                 , "pref"
                 , "ending"
+                , "part"
         );
     }
 

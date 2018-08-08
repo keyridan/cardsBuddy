@@ -5,6 +5,7 @@ import com.j0rsa.cardsbuddy.common.InfoData;
 import com.j0rsa.cardsbuddy.common.InfoTable;
 import com.j0rsa.cardsbuddy.common.SmallTitledRows;
 import com.j0rsa.cardsbuddy.common.Title;
+import com.j0rsa.cardsbuddy.translation.model.Language;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.j0rsa.cardsbuddy.DefaultData.aTranslationRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -57,7 +59,7 @@ public class LeoFlecServiceTest {
         InfoData infoData1 = InfoData.builder()
                 .title("Genitiv")
                 .value("der Prüfung")
-                .highLights(Lists.newArrayList())
+                .highLights(list())
                 .build();
         InfoData infoData2 = InfoData.builder()
                 .title("Dativ")
@@ -65,6 +67,31 @@ public class LeoFlecServiceTest {
                 .highLights(list("en"))
                 .build();
         InfoTable table = leoFlecService.requestFlec(testRequest, nounUrlPart);
+
+        assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
+        assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
+    }
+
+    @Test
+    public void requestRuFlec() {
+        String urlPart = "?kvz=4dkrADn71HeCbYHc6gUP8lumz53RnXkHmteQW-XdF5mpMIvkBXKtNNrDKDuQ7bUGR0nbEc-Nobbk-4Doy4G75M1D720FPBcjANyN9StNBebU-xUpDfAAji-";
+        TranslationRequest request = aTranslationRequest()
+                .fromLanguage(Language.Code.RU)
+                .toLanguage(Language.Code.EN)
+                .word("читать")
+                .build();
+        String titleRowValue = "Persönliche Formen";
+        String smallTitleRowValue = "Futur";
+        InfoData infoData1 = InfoData.builder()
+                .value("(я) буду читать")
+                .highLights(list("ать"))
+                .build();
+        InfoData infoData2 = InfoData.builder()
+                .value("(он/она/оно) читал/читала/читало бы")
+                .highLights(list("ал", "ала", "ало"))
+                .build();
+        InfoTable table = leoFlecService.requestFlec(request, urlPart);
 
         assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
         assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);

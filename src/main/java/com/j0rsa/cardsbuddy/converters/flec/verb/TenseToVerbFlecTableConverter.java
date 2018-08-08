@@ -21,12 +21,16 @@ public class TenseToVerbFlecTableConverter implements Converter<TenseType, VerbF
 
     @Override
     public VerbFlecTable convert(TenseType tense) {
-        return tense.get_case() != null
+        return caseExist(tense.get_case())
                 ? VerbFlecTable.builder()
                 .title(tense.getTitle())
                 .flecRows(convertRows(tense.get_case()))
                 .build()
                 : null;
+    }
+
+    private boolean caseExist(List<CaseType> _case) {
+        return _case != null && !_case.isEmpty();
     }
 
     private List<VerbFlecRecord> convertRows(List<CaseType> cases) {
