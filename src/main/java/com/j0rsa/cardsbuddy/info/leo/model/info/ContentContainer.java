@@ -35,7 +35,6 @@ public abstract class ContentContainer implements ValueContainer {
         return contents.stream()
                 .filter(namedList -> names.contains(namedList._1))
                 .map(namedElement -> new Tuple2<>(namedElement._1, parseValuesByName(namedElement._2)))
-                .filter(namedElement -> !namedElement._2.isEmpty())
                 .collect(Collectors.toList());
     }
 

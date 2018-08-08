@@ -98,6 +98,31 @@ public class LeoFlecServiceTest {
         assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 
+    @Test
+    public void requestEnFlec() {
+        String urlPart = "?kvz=4dkrADn71HeCbYCs67UP8lumz53RnXH31vmrUL_9hScDG0HfGwQNAs0iazuQS3MykZxvZlpa1HsSa1a830Ld1xyw_J3XXTUBwVxuBlqbBWdEa8ZcZhg";
+        TranslationRequest request = aTranslationRequest()
+                .fromLanguage(Language.Code.EN)
+                .toLanguage(Language.Code.RU)
+                .word("read")
+                .build();
+        String titleRowValue = "Indicative";
+        String smallTitleRowValue = "Simple present";
+        InfoData infoData1 = InfoData.builder()
+                .value("I read")
+                .highLights(list())
+                .build();
+        InfoData infoData2 = InfoData.builder()
+                .value("he/she/it has read")
+                .highLights(list())
+                .build();
+        InfoTable table = leoFlecService.requestFlec(request, urlPart);
+
+        assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
+        assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
+    }
+
     private List<InfoData> extractedInfoData(InfoTable table) {
         return extractedTitledRows(table)
                 .flatMap(titledRows -> titledRows.getInfoData().stream())

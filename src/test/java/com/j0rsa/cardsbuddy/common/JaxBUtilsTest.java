@@ -1,6 +1,7 @@
 package com.j0rsa.cardsbuddy.common;
 
 import com.j0rsa.cardsbuddy.info.leo.model.flec.ObjectFactory;
+import com.j0rsa.cardsbuddy.info.leo.model.flec.verb.VerbType;
 import io.vavr.Tuple2;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -13,6 +14,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class JaxBUtilsTest {
 
+    @Test
+    public void whenEmptyElement() {
+        ObjectFactory factory = factory();
+        VerbType.Ending verbTypeEnding = factory.createVerbTypeEnding();
+        JAXBElement element1 = factory.createVerbTypeEnding(verbTypeEnding);
+        List<JAXBElement> elements = Lists.newArrayList(element1);
+
+        List<JAXBElement> firstElements = Lists.newArrayList(element1);
+        Tuple2<String, List<JAXBElement>> firstExpected = tuple("ending", firstElements);
+
+        List<Tuple2<String, List<JAXBElement>>> splitedCollection = getSplitedCollection(elements);
+
+        assertThat(splitedCollection).containsExactly(firstExpected);
+    }
 
     @Test
     public void when2SameElementsThen1TupleOfElements() {

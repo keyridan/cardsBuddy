@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,6 +34,7 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
         return verb.parseValuesByNames(namesToParse())
                 .stream()
                 .map(collectValuesWithRadicalIfNeeded())
+                .filter(elementIsEmpty())
                 .collect(Collectors.joining(" "))
                 .replaceAll(radicalMaskForPrefAndEnding, radical)
                 .replaceAll(radicalMask, radical)
@@ -40,7 +42,9 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
     }
 
     private Function<Tuple2<String, List<String>>, String> collectValuesWithRadicalIfNeeded() {
-        return namedElement -> namedElement._2.stream()
+        return namedElement -> namedElement._2.isEmpty()
+                ? addRadicalIfNeeded(namedElement, "")
+                : namedElement._2.stream()
                 .map(element -> addRadicalIfNeeded(namedElement, element))
                 .collect(Collectors.joining("/"));
     }
@@ -70,6 +74,11 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
     private List<String> highlights(VerbType verb) {
         return verb.parseValuesByNames(Lists.newArrayList("pref", "ending")).stream()
                 .flatMap(namedElement -> namedElement._2.stream())
+                .filter(elementIsEmpty())
                 .collect(Collectors.toList());
+    }
+
+    private Predicate<String> elementIsEmpty() {
+        return element -> !element.isEmpty();
     }
 }
