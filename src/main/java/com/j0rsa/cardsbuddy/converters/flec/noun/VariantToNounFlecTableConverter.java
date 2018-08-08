@@ -9,6 +9,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,15 +22,18 @@ public class VariantToNounFlecTableConverter implements Converter<VariantType, N
 
     @Override
     public NounFlecTable convert(VariantType variantType) {
-        return NounFlecTable.builder()
+        return variantType.caseExist()
+                ? NounFlecTable.builder()
                 .title(variantType.getTitle())
                 .flecRows(convertRows(variantType.getCase()))
-                .build();
+                .build()
+                : null;
     }
 
     private List<NounFlecRecord> convertRows(List<CaseType> aCase) {
         return aCase.stream()
                 .map(caseType -> conversionService.convert(caseType, NounFlecRecord.class))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 }

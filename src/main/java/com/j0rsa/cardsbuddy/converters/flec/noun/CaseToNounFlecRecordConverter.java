@@ -14,12 +14,13 @@ import java.util.stream.Collectors;
 public class CaseToNounFlecRecordConverter implements Converter<CaseType, NounFlecRecord> {
     @Override
     public NounFlecRecord convert(CaseType caseType) {
-        String radical = caseType.getRadical();
-        return NounFlecRecord.builder()
+        return caseType.nounExist()
+                ? NounFlecRecord.builder()
                 .caseValue(caseType.getCn())
                 .highlights(highLights(caseType.getNoun()))
-                .value(value(caseType.getNoun(), radical))
-                .build();
+                .value(value(caseType.getNoun(), caseType.getRadical()))
+                .build()
+                : null;
     }
 
     private String value(NounType noun, String radical) {

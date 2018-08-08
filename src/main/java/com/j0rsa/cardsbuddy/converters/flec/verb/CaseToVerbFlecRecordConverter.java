@@ -21,11 +21,12 @@ public class CaseToVerbFlecRecordConverter implements Converter<CaseType, VerbFl
 
     @Override
     public VerbFlecRecord convert(CaseType aCase) {
-        String radical = aCase.getRadical();
-        return VerbFlecRecord.builder()
+        return aCase.verbExist()
+                ? VerbFlecRecord.builder()
                 .highlights(highlights(aCase.getVerb()))
-                .value(value(aCase.getVerb(), radical))
-                .build();
+                .value(value(aCase.getVerb(), aCase.getRadical()))
+                .build()
+                : null;
     }
 
     private String value(VerbType verb, String radical) {

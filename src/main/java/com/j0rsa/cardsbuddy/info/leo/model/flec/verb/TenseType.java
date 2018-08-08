@@ -18,4 +18,8 @@ public class TenseType {
     protected List<CaseType> _case = Lists.newArrayList();
     @XmlAttribute(name = "title")
     protected String title;
+
+    public boolean caseExist() {
+        return this._case != null && !this._case.isEmpty();
+    }
 }

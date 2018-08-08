@@ -23,4 +23,12 @@ public class CaseType {
     protected VerbType verb;
     @XmlAttribute(name = "cn")
     protected String cn;
+
+    public boolean verbExist() {
+        return this.verb != null && this.verb.contentExist();
+    }
+
+    public boolean nounExist() {
+        return this.noun != null;
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -31,6 +32,7 @@ public class MoodToNounFlecTablesConverter implements Converter<MoodType, NounFl
         return variant.stream()
                 .filter(variantItem -> !variantItem.getTitle().isEmpty())
                 .map(variantItem -> conversionService.convert(variantItem, NounFlecTable.class))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 }

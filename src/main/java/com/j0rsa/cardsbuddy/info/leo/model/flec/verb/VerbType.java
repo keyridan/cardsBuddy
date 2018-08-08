@@ -96,6 +96,10 @@ public class VerbType extends ContentContainer {
         return this.content;
     }
 
+    public boolean contentExist() {
+        return this.content != null && !this.content.isEmpty();
+    }
+
 
     /**
      * <p>Java class for anonymous complex type.

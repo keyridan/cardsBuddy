@@ -9,6 +9,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,7 +22,7 @@ public class TenseToVerbFlecTableConverter implements Converter<TenseType, VerbF
 
     @Override
     public VerbFlecTable convert(TenseType tense) {
-        return caseExist(tense.get_case())
+        return tense.caseExist()
                 ? VerbFlecTable.builder()
                 .title(tense.getTitle())
                 .flecRows(convertRows(tense.get_case()))
@@ -29,13 +30,10 @@ public class TenseToVerbFlecTableConverter implements Converter<TenseType, VerbF
                 : null;
     }
 
-    private boolean caseExist(List<CaseType> _case) {
-        return _case != null && !_case.isEmpty();
-    }
-
     private List<VerbFlecRecord> convertRows(List<CaseType> cases) {
         return cases.stream()
                 .map(aCase -> conversionService.convert(aCase, VerbFlecRecord.class))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 }
