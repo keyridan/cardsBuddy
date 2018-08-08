@@ -1,40 +1,34 @@
 package com.j0rsa.cardsbuddy.controller;
 
 import com.j0rsa.cardsbuddy.common.Info;
-import com.j0rsa.cardsbuddy.common.InfoServiceResolver;
+import com.j0rsa.cardsbuddy.info.InfoSearcher;
 import com.j0rsa.cardsbuddy.translation.TranslationService;
 import com.j0rsa.cardsbuddy.translation.model.Language;
 import com.j0rsa.cardsbuddy.translation.model.Translation;
 import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
+import io.vavr.Tuple2;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
 @RequestMapping("/api/translate/")
 public class TranslationController {
-    private InfoServiceResolver infoServiceResolver;
+    private InfoSearcher infoSearcher;
 
-    public TranslationController(InfoServiceResolver infoServiceResolver) {
-        this.infoServiceResolver = infoServiceResolver;
+    public TranslationController(InfoSearcher infoSearcher) {
+        this.infoSearcher = infoSearcher;
     }
 
     @PostMapping
     @ResponseBody
     public Translation translate(@RequestBody TranslationRequest request) {
         Translation translation = TranslationService.translate(request);
-        List<Info> infos = getInfosFor(requestWithFromLanguageFromTranslationIfAuto(request, translation));
-        translation.setInfos(infos);
+        Tuple2<List<String>, List<Info>> infos = infoSearcher.search(requestWithFromLanguageFromTranslationIfAuto(request, translation));
+        translation.setErrorMessages(infos._1);
+        translation.setInfos(infos._2);
         return translation;
-    }
-
-    private List<Info> getInfosFor(@RequestBody TranslationRequest request) {
-        return infoServiceResolver.resolve(request.getFromLanguage(), request.getInfoTypes())
-                .stream()
-                .map(infoService -> infoService.search(request))
-                .collect(Collectors.toList());
     }
 
     private TranslationRequest requestWithFromLanguageFromTranslationIfAuto(TranslationRequest request, Translation translation) {
