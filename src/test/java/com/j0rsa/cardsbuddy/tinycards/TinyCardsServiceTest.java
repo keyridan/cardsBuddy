@@ -7,11 +7,12 @@ import org.apache.http.StatusLine;
 import org.junit.Test;
 import org.springframework.security.authentication.BadCredentialsException;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
-import static com.j0rsa.cardsbuddy.DefaultData.defaultLoginRequest;
-import static com.j0rsa.cardsbuddy.DefaultData.defaultTinyCardsId;
+import static com.j0rsa.cardsbuddy.DefaultData.*;
 import static com.j0rsa.cardsbuddy.tinycards.model.CardBuilder.aCard;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -69,6 +70,34 @@ public class TinyCardsServiceTest {
     }
 
     @Test
+    public void testAddCardWithImage() throws Exception {
+        Details details = details()
+                .data(getFile("de.png"))
+                .imageType(ImageType.Code.IMAGE_PNG)
+                .build();
+        Card card = aCard()
+                .frontSideFact("die Karte")
+                .backSideImageFact(details)
+                .build();
+
+        Optional<StatusLine> statusLine = tinyCardsService.add(DefaultData.defaultDecksId(), card);
+
+        assertThat(statusLine).isPresent();
+        assertThat(statusLine.get().getStatusCode()).isEqualTo(200);
+    }
+
+    @Test
+    public void testAddImage() throws Exception {
+        Details imageDetails = Details.builder().data(getFile("de.png"))
+                .imageType(ImageType.Code.IMAGE_PNG)
+                .build();
+        Optional<ImageFact> imageFact = tinyCardsService.addImage(imageDetails);
+
+        assertThat(imageFact).isPresent();
+        assertThat(imageFact.get().getId()).isNotNull();
+    }
+
+    @Test
     public void testPatchDeck() throws Exception {
         Deck deck = defaultDeck();
 
@@ -93,5 +122,11 @@ public class TinyCardsServiceTest {
         deck.setShareable(true);
         deck.addCards(card1, card2);
         return deck;
+    }
+
+    private File getFile(String imagePath) {
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        URL resource = classLoader.getResource(imagePath);
+        return new File(resource.getFile());
     }
 }

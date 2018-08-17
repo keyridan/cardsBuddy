@@ -20,6 +20,12 @@ public class CardBuilder {
         return this;
     }
 
+    public CardBuilder backSideImageFact(Details details) {
+        Concept concept = createConceptWithImage(details);
+        this.backSide.addConcept(concept);
+        return this;
+    }
+
     public Card build() {
         Card card = new Card();
         card.addSides(frontSide, backSide);
@@ -28,6 +34,13 @@ public class CardBuilder {
 
     private Concept createConcept(String text) {
         Fact fact = new TextFact(text);
+        return new Concept(fact);
+    }
+
+    private Concept createConceptWithImage(Details details) {
+        Fact fact = ImageFact.builder()
+                .details(details)
+                .build();
         return new Concept(fact);
     }
 }

@@ -14,9 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.j0rsa.cardsbuddy.SystemConstants.DECK_CARDS_TEMPLATE;
+import static com.j0rsa.cardsbuddy.SystemConstants.FACT_TEMPLATE;
 import static com.j0rsa.cardsbuddy.tinycards.TinyCardsParser.parseTo;
 import static com.j0rsa.cardsbuddy.tinycards.TinyCardsRequest.*;
-
 
 @Service
 public class TinyCardsService {
@@ -68,10 +68,34 @@ public class TinyCardsService {
                 .flatMap(parseTo(Deck.class));
     }
 
+    public Optional<ImageFact> addImage(Details details) {
+        return post(FACT_TEMPLATE)
+                .addCookiesHeaders(securityService.headers())
+                .bodyOf(details)
+                .execute()
+                .flatMap(TinyCardsResponse::returnResponse)
+                .map(TinyCardsHttpResponse::checkStatus)
+                .flatMap(TinyCardsHttpResponse::returnContent)
+                .flatMap(parseTo(ImageFact.class));
+    }
+
     public Optional<StatusLine> add(UUID deckId, Card card) {
+        addImageFactsImagesAndUpdate(card);
         return requestDeckForEdit(deckId)
                 .map(deck -> deck.addCard(card))
                 .flatMap(deck -> patchDeck(deckId, deck));
+    }
+
+    private void addImageFactsImagesAndUpdate(Card card) {
+        card.getSides().stream()
+                .flatMap(side -> side.getConcepts().stream())
+                .map(Concept::getFact)
+                .filter(fact -> fact instanceof ImageFact)
+                .map(fact -> (ImageFact) fact)
+                .forEach(fact -> addImage(fact.getDetails()).ifPresent(newFact -> {
+                    fact.setId(newFact.getId());
+                    fact.setImageUrl(newFact.getImageUrl());
+                }));
     }
 
     Optional<StatusLine> patchDeck(UUID deckId, Deck deck) {

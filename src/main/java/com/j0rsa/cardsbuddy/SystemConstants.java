@@ -7,6 +7,7 @@ public class SystemConstants {
     public static final String CONTEXT_URI = "context_uri";
 
     public static final String DECK_CARDS_TEMPLATE = "decks/%s?attribution=true&expand=true";
+    public static final String FACT_TEMPLATE = "facts";
     public static final String TINY_CARDS_COOKIE_HEADER = "Set-Cookie";
     public static final String TINY_CARDS_PREFIX = "tinycards_";
 

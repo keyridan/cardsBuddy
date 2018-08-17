@@ -3,6 +3,7 @@ package com.j0rsa.cardsbuddy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j0rsa.cardsbuddy.controller.model.leo.LeoInfo;
 import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
+import com.j0rsa.cardsbuddy.tinycards.model.Details;
 import com.j0rsa.cardsbuddy.translation.model.*;
 
 import java.util.ArrayList;
@@ -186,5 +187,9 @@ public class DefaultData {
         return anInfoVerb()
                 .description("Fähigkeit zu lesen")
                 .url("https://dict.leo.org/englisch-deutsch/zu+lesen");
+    }
+
+    public static Details.DetailsBuilder details() {
+        return Details.builder();
     }
 }
