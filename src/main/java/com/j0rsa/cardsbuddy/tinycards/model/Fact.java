@@ -10,6 +10,7 @@ import lombok.Data;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = TextFact.class, name = "TEXT"),
+        @JsonSubTypes.Type(value = ImageFact.class, name = "IMAGE"),
 })
 public abstract class Fact {
     private String id;
