@@ -1,5 +1,6 @@
 package com.j0rsa.cardsbuddy.tinycards;
 
+import com.j0rsa.cardsbuddy.tinycards.exception.BadRequestException;
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -38,6 +39,11 @@ class TinyCardsHttpResponse {
                 Case($StatusLine($(401), $()), (statusCode, reason) -> {
                             logStatus(statusCode, reason);
                             throw new BadCredentialsException(reason);
+                        }
+                ),
+                Case($StatusLine($(400), $()), (statusCode, reason) -> {
+                            logStatus(statusCode, reason);
+                            throw new BadRequestException(reason);
                         }
                 ),
                 Case($StatusLine($(), $()), (statusCode, reason) -> {

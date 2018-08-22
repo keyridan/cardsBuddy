@@ -6,22 +6,17 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.commons.io.FileUtils;
+import com.j0rsa.cardsbuddy.tinycards.model.ImageType;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
 
-public class FileDeserializer extends JsonDeserializer<File> {
+public class ImageTypeDeserializer extends JsonDeserializer<ImageType.Code> {
     @Override
-    public File deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public ImageType.Code deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
         String data = node.textValue();
 
-        byte[] decodedBytes = Base64.getDecoder().decode(data);
-        File file = new File("factImage.jpg");
-        FileUtils.writeByteArrayToFile(file, decodedBytes);
-        return file;
+        return ImageType.Code.of(data).orElse(null);
     }
 }
