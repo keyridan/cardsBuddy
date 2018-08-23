@@ -12,16 +12,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 
-public class FileDeserializer extends JsonDeserializer<File> {
+public class FileDeserializer extends JsonDeserializer<byte[]> {
     @Override
-    public File deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public byte[] deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
         String data = node.textValue();
 
-        byte[] decodedBytes = Base64.getDecoder().decode(data);
-        File file = new File("factImage.jpg");
-        FileUtils.writeByteArrayToFile(file, decodedBytes);
-        return file;
+        return Base64.getDecoder().decode(data);
     }
 }

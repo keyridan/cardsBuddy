@@ -3,12 +3,13 @@ package com.j0rsa.cardsbuddy.tinycards;
 import com.j0rsa.cardsbuddy.DefaultData;
 import com.j0rsa.cardsbuddy.TestSecurityService;
 import com.j0rsa.cardsbuddy.tinycards.model.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.StatusLine;
 import org.junit.Test;
 import org.springframework.security.authentication.BadCredentialsException;
 
-import java.io.File;
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,9 +125,9 @@ public class TinyCardsServiceTest {
         return deck;
     }
 
-    private File getFile(String imagePath) {
-        ClassLoader classLoader = this.getClass().getClassLoader();
-        URL resource = classLoader.getResource(imagePath);
-        return new File(resource.getFile());
+    private byte[] getFile(String imagePath) throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(imagePath);
+        return IOUtils.toByteArray(inputStream);
     }
 }

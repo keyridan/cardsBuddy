@@ -10,8 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.File;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -21,5 +19,5 @@ public class Details {
     @JsonDeserialize(using = ImageTypeDeserializer.class)
     private ImageType.Code imageType;
     @JsonDeserialize(using = FileDeserializer.class)
-    private File data;
+    private byte[] data;
 }
