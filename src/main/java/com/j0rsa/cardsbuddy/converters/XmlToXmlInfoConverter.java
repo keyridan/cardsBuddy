@@ -1,8 +1,8 @@
 package com.j0rsa.cardsbuddy.converters;
 
-import com.j0rsa.cardsbuddy.info.leo.model.info.ObjectFactory;
-import com.j0rsa.cardsbuddy.info.leo.model.info.XmlInfo;
-import com.j0rsa.cardsbuddy.translation.exceptions.ParserException;
+import com.j0rsa.cardsbuddy.integration.info.leo.model.info.ObjectFactory;
+import com.j0rsa.cardsbuddy.integration.info.leo.model.info.XmlInfo;
+import com.j0rsa.cardsbuddy.integration.translation.exceptions.ParserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

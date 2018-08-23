@@ -1,10 +1,10 @@
 package com.j0rsa.cardsbuddy.controller;
 
-import com.j0rsa.cardsbuddy.tinycards.TinyCardsService;
-import com.j0rsa.cardsbuddy.tinycards.model.Card;
-import com.j0rsa.cardsbuddy.translation.TranslationService;
-import com.j0rsa.cardsbuddy.translation.model.Translation;
-import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
+import com.j0rsa.cardsbuddy.integration.tinycards.TinyCardsService;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.Card;
+import com.j0rsa.cardsbuddy.integration.translation.TranslationService;
+import com.j0rsa.cardsbuddy.integration.translation.model.Translation;
+import com.j0rsa.cardsbuddy.integration.translation.model.TranslationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

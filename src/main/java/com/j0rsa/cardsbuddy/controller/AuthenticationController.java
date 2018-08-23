@@ -1,7 +1,7 @@
 package com.j0rsa.cardsbuddy.controller;
 
 import com.j0rsa.cardsbuddy.security.JwtAuthenticationService;
-import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

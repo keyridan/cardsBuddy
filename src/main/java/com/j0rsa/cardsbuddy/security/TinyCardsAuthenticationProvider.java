@@ -1,9 +1,9 @@
 package com.j0rsa.cardsbuddy.security;
 
 import com.j0rsa.cardsbuddy.security.exception.WrongCodeException;
-import com.j0rsa.cardsbuddy.tinycards.TinyCardsService;
-import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
-import com.j0rsa.cardsbuddy.tinycards.model.TinyCardsLoginResponse;
+import com.j0rsa.cardsbuddy.integration.tinycards.TinyCardsService;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.LoginRequest;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.TinyCardsLoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;

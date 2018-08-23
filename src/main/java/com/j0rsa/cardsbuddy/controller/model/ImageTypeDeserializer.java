@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.j0rsa.cardsbuddy.tinycards.model.ImageType;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.ImageType;
 
 import java.io.IOException;
 

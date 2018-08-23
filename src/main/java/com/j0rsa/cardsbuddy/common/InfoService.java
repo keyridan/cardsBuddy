@@ -1,7 +1,7 @@
 package com.j0rsa.cardsbuddy.common;
 
-import com.j0rsa.cardsbuddy.translation.model.Language;
-import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
+import com.j0rsa.cardsbuddy.integration.translation.model.Language;
+import com.j0rsa.cardsbuddy.integration.translation.model.TranslationRequest;
 
 import java.util.List;
 

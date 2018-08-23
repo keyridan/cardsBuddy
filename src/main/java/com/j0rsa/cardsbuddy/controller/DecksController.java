@@ -1,7 +1,7 @@
 package com.j0rsa.cardsbuddy.controller;
 
-import com.j0rsa.cardsbuddy.tinycards.TinyCardsService;
-import com.j0rsa.cardsbuddy.tinycards.model.DeckInfo;
+import com.j0rsa.cardsbuddy.integration.tinycards.TinyCardsService;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.DeckInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

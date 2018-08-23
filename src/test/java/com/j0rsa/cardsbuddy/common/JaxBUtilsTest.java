@@ -1,7 +1,7 @@
 package com.j0rsa.cardsbuddy.common;
 
-import com.j0rsa.cardsbuddy.info.leo.model.flec.ObjectFactory;
-import com.j0rsa.cardsbuddy.info.leo.model.flec.verb.VerbType;
+import com.j0rsa.cardsbuddy.integration.info.leo.model.flec.ObjectFactory;
+import com.j0rsa.cardsbuddy.integration.info.leo.model.flec.verb.VerbType;
 import io.vavr.Tuple2;
 import org.assertj.core.util.Lists;
 import org.junit.Test;

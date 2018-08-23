@@ -2,16 +2,16 @@ package com.j0rsa.cardsbuddy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j0rsa.cardsbuddy.controller.model.leo.LeoInfo;
-import com.j0rsa.cardsbuddy.tinycards.model.LoginRequest;
-import com.j0rsa.cardsbuddy.tinycards.model.Details;
-import com.j0rsa.cardsbuddy.translation.model.*;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.LoginRequest;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.Details;
+import com.j0rsa.cardsbuddy.integration.translation.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static com.j0rsa.cardsbuddy.translation.model.TranslationRequest.builder;
+import static com.j0rsa.cardsbuddy.integration.translation.model.TranslationRequest.builder;
 
 public class DefaultData {
     private static TestData testData;

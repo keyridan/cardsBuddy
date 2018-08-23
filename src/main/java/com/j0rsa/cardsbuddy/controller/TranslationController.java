@@ -1,11 +1,11 @@
 package com.j0rsa.cardsbuddy.controller;
 
 import com.j0rsa.cardsbuddy.common.Info;
-import com.j0rsa.cardsbuddy.info.InfoSearcher;
-import com.j0rsa.cardsbuddy.translation.TranslationService;
-import com.j0rsa.cardsbuddy.translation.model.Language;
-import com.j0rsa.cardsbuddy.translation.model.Translation;
-import com.j0rsa.cardsbuddy.translation.model.TranslationRequest;
+import com.j0rsa.cardsbuddy.integration.info.InfoSearcher;
+import com.j0rsa.cardsbuddy.integration.translation.TranslationService;
+import com.j0rsa.cardsbuddy.integration.translation.model.Language;
+import com.j0rsa.cardsbuddy.integration.translation.model.Translation;
+import com.j0rsa.cardsbuddy.integration.translation.model.TranslationRequest;
 import io.vavr.Tuple2;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.common;
 
-import com.j0rsa.cardsbuddy.translation.model.Language;
+import com.j0rsa.cardsbuddy.integration.translation.model.Language;
 import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Service;
 
