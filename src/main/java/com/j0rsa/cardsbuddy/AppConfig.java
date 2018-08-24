@@ -58,7 +58,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/*", "/api/translate/*").permitAll()
+                .antMatchers("/api/auth/*", "/api/translate/*", "/api/image/*").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 
