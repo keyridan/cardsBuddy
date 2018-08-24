@@ -20,15 +20,15 @@ public class ImageSearcher {
         this.imageApiKey = imageApiKey;
     }
 
-    public List<Image> requestImages(String query) {
+    public Images requestImages(String query, int pageNumber) {
         return get(uri(imageApiKey)
+                .page(pageNumber)
                 .query(query))
                 .execute()
                 .flatMap(ImageResponse::returnResponse)
                 .map(ImageHttpResponse::checkStatus)
                 .flatMap(ImageHttpResponse::returnContent)
                 .flatMap(parseTo(Images.class))
-                .map(Images::getHits)
-                .orElse(Lists.newArrayList());
+                .orElseGet(Images::new);
     }
 }

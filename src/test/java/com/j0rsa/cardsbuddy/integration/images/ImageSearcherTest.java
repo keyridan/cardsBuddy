@@ -2,8 +2,6 @@ package com.j0rsa.cardsbuddy.integration.images;
 
 import org.junit.Test;
 
-import java.util.List;
-
 import static com.j0rsa.cardsbuddy.DefaultData.testImageApiKey;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,9 +14,18 @@ public class ImageSearcherTest {
 
     @Test
     public void requestImages() {
-        List<Image> result = imageService.requestImages("yellow flowers");
+        Images result = imageService.requestImages("yellow flowers", 1);
 
-        assertThat(result).hasSize(20);
-        assertThat(result).extracting(Image::getWebformatURL).isNotNull();
+        assertThat(result.getTotalHits()).isGreaterThan(0);
+        assertThat(result.getHits()).hasSize(20);
+        assertThat(result.getHits()).extracting(Image::getWebformatURL).isNotNull();
+    }
+
+    @Test
+    public void requestImagesWhenEmpty() {
+        Images result = imageService.requestImages("canFoundNothingForThis", 1);
+
+        assertThat(result.getTotalHits()).isEqualTo(0);
+        assertThat(result.getHits()).hasSize(0);
     }
 }
