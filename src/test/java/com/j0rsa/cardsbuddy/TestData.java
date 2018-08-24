@@ -14,6 +14,7 @@ public class TestData {
     private UUID deckId;
     private String testTinyCardsJwt;
     private String testTinyCardsSession;
+    private String imageApiKey;
 
     public static TestData loadFrom(String filename) throws Exception {
         Yaml yaml = new Yaml();

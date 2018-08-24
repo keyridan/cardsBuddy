@@ -1,13 +1,12 @@
 package com.j0rsa.cardsbuddy.integration.tinycards;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.vavr.CheckedFunction0;
-import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.j0rsa.cardsbuddy.SystemConstants.TINY_CARDS_PREFIX;
@@ -19,17 +18,6 @@ class TinyCardsParser {
         put("jwt_token", TINY_CARDS_PREFIX + "jwt_token");
         put("session", TINY_CARDS_PREFIX + "session");
     }};
-
-    private static <T> Optional<T> parse(String json, Class<T> tClass) {
-        CheckedFunction0<T> readValue = () -> mapper().readValue(json, tClass);
-        return Try.of(readValue)
-                .onFailure(e -> log.error("Error", e))
-                .toJavaOptional();
-    }
-
-    static <V> Function<String, Optional<V>> parseTo(Class<V> vClass) {
-        return json -> TinyCardsParser.parse(json, vClass);
-    }
 
     static Map<String, String> parseHeaders(List<String> headers) {
         return headers.stream()
@@ -52,9 +40,5 @@ class TinyCardsParser {
                 .stream()
                 .filter(mapEntry -> authenticationHeaderKeys.contains(mapEntry.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
-
-    private static ObjectMapper mapper() {
-        return new ObjectMapper();
     }
 }

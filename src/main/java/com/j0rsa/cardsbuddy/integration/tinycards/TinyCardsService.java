@@ -1,8 +1,9 @@
 package com.j0rsa.cardsbuddy.integration.tinycards;
 
-import com.j0rsa.cardsbuddy.security.SecurityService;
-import com.j0rsa.cardsbuddy.integration.tinycards.exception.ParserException;
+import com.j0rsa.cardsbuddy.integration.common.BaseHttpResponse;
+import com.j0rsa.cardsbuddy.integration.common.exception.ParserException;
 import com.j0rsa.cardsbuddy.integration.tinycards.model.*;
+import com.j0rsa.cardsbuddy.security.SecurityService;
 import org.apache.http.StatusLine;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 import static com.j0rsa.cardsbuddy.SystemConstants.DECK_CARDS_TEMPLATE;
 import static com.j0rsa.cardsbuddy.SystemConstants.FACT_TEMPLATE;
-import static com.j0rsa.cardsbuddy.integration.tinycards.TinyCardsParser.parseTo;
+import static com.j0rsa.cardsbuddy.integration.common.ResponseParser.parseTo;
 import static com.j0rsa.cardsbuddy.integration.tinycards.TinyCardsRequest.*;
 
 @Service
@@ -52,7 +53,7 @@ public class TinyCardsService {
                 .execute()
                 .flatMap(TinyCardsResponse::returnResponse)
                 .map(TinyCardsHttpResponse::checkStatus)
-                .flatMap(TinyCardsHttpResponse::returnContent)
+                .flatMap(BaseHttpResponse::returnContent)
                 .flatMap(parseTo(Decks.class))
                 .map(Decks::getDecks)
                 .orElse(Lists.newArrayList());

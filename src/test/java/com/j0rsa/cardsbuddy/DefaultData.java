@@ -47,6 +47,10 @@ public class DefaultData {
         return getTestData().getTestTinyCardsSession();
     }
 
+    public static String testImageApiKey() {
+        return getTestData().getImageApiKey();
+    }
+
     static String testTinyCardsJwt() {
         return getTestData().getTestTinyCardsJwt();
     }
