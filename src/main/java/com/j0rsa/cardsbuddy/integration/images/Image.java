@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Image {
     private String webformatURL;
+    private int webformatHeight;
+    private int webformatWidth;
 }

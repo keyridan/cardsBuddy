@@ -19,6 +19,8 @@ public class ImageSearcherTest {
         assertThat(result.getTotalHits()).isGreaterThan(0);
         assertThat(result.getHits()).hasSize(20);
         assertThat(result.getHits()).extracting(Image::getWebformatURL).isNotNull();
+        assertThat(result.getHits()).extracting(Image::getWebformatHeight).isNotNull();
+        assertThat(result.getHits()).extracting(Image::getWebformatWidth).isNotNull();
     }
 
     @Test

@@ -1,11 +1,8 @@
 package com.j0rsa.cardsbuddy.integration.images;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static com.j0rsa.cardsbuddy.integration.common.ResponseParser.parseTo;
 import static com.j0rsa.cardsbuddy.integration.images.ImageRequest.get;
