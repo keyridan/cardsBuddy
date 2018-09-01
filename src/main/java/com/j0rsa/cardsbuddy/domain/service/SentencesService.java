@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.j0rsa.cardsbuddy.domain.model.Sentences.createFrom;
@@ -76,5 +77,9 @@ public class SentencesService {
                 Language.Code.PL,
                 Language.Code.UK
         );
+    }
+
+    public Optional<Sentences> findById(Long id) {
+        return repository.findById(id);
     }
 }

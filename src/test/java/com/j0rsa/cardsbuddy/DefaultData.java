@@ -6,7 +6,6 @@ import com.j0rsa.cardsbuddy.domain.model.Sentences;
 import com.j0rsa.cardsbuddy.integration.tinycards.model.Details;
 import com.j0rsa.cardsbuddy.integration.tinycards.model.LoginRequest;
 import com.j0rsa.cardsbuddy.integration.translation.model.*;
-import org.assertj.core.util.Lists;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -219,8 +218,7 @@ public class DefaultData {
                 .id(new Random().nextLong());
     }
 
-    private static Sentences.SentencesBuilder aSentence() {
-        return Sentences.builder()
-                .translations(Lists.newArrayList());
+    public static Sentences.SentencesBuilder aSentence() {
+        return Sentences.builder();
     }
 }

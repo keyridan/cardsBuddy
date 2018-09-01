@@ -1,10 +1,10 @@
 package com.j0rsa.cardsbuddy.domain.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.assertj.core.util.Lists;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,7 +23,7 @@ public class Sentences {
     private String text;
     @Builder.Default
     @Embedded
-    private List<Translation> translations;
+    private List<Translation> translations = Lists.newArrayList();
 
     static public Sentences createFrom(List<Translation> translations, Sentences sentences) {
         return new Sentences(sentences.id, sentences.lang, sentences.text, translations);

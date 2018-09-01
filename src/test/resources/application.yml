@@ -5,6 +5,9 @@ app:
     refreshBeforeMs: 9999999999999990
 api:
     imageKey: abc
+    tatoeba:
+      sentences: https://downloads.tatoeba.org/exports/sentences.tar.bz2
+      links: https://downloads.tatoeba.org/exports/links.tar.bz2
 
 logging:
   level:
