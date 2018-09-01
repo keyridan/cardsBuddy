@@ -2,14 +2,15 @@ package com.j0rsa.cardsbuddy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j0rsa.cardsbuddy.controller.model.leo.LeoInfo;
-import com.j0rsa.cardsbuddy.integration.tinycards.model.LoginRequest;
+import com.j0rsa.cardsbuddy.domain.model.Sentences;
 import com.j0rsa.cardsbuddy.integration.tinycards.model.Details;
+import com.j0rsa.cardsbuddy.integration.tinycards.model.LoginRequest;
 import com.j0rsa.cardsbuddy.integration.translation.model.*;
+import org.assertj.core.util.Lists;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static com.j0rsa.cardsbuddy.integration.translation.model.TranslationRequest.builder;
 
@@ -195,5 +196,31 @@ public class DefaultData {
 
     public static Details.DetailsBuilder details() {
         return Details.builder();
+    }
+
+    public static Pageable defaultPage() {
+        return PageRequest.of(0, 10);
+    }
+
+    public static Pageable defaultPage(int paguNumber) {
+        return PageRequest.of(paguNumber, 10);
+    }
+
+    public static Sentences.SentencesBuilder aSentenceWithText(String text) {
+        return aSentence()
+                .id(new Random().nextLong())
+                .text(text);
+    }
+
+    public static Sentences.SentencesBuilder aSentenceWithSupportedLanguage() {
+        return aSentence()
+                .lang(Language.Code.DE.getIso639_3Value())
+                .text("test text")
+                .id(new Random().nextLong());
+    }
+
+    private static Sentences.SentencesBuilder aSentence() {
+        return Sentences.builder()
+                .translations(Lists.newArrayList());
     }
 }
