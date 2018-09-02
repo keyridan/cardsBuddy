@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +38,7 @@ public class TatoebaFileDataImporterTest {
     @Test
     public void importSentencesData() throws Exception {
         File file = getFile("tatoeba/sentences.tar.bz2");
-        fileDataImporter.importSentencesData(file);
+        fileDataImporter.importSentencesData(file, fileId());
 
         Iterable<Sentences> foundRecords = sentencesService.findAll();
         assertThat(foundRecords).hasSize(9);
@@ -57,13 +58,17 @@ public class TatoebaFileDataImporterTest {
                 .build();
         sentencesService.saveAll(Lists.newArrayList(deSentence, enSentence));
         File file = getFile("tatoeba/links.tar.bz2");
-        fileDataImporter.importLinksData(file);
+        fileDataImporter.importLinksData(file, fileId());
 
         Iterable<Sentences> foundRecords = sentencesService.findAll();
         assertThat(foundRecords).hasSize(2);
         Optional<Sentences> foundSentences = sentencesService.findById(2L);
         assertThat(foundSentences.get().getTranslations()).extracting(Translation::getLang).containsExactly(Language.Code.EN.getIso639_3Value());
         assertThat(foundSentences.get().getTranslations()).extracting(Translation::getSentences).containsExactly(enSentence);
+    }
+
+    private UUID fileId() {
+        return UUID.randomUUID();
     }
 
     @Test
@@ -80,8 +85,8 @@ public class TatoebaFileDataImporterTest {
                 .build();
         sentencesService.saveAll(Lists.newArrayList(deSentence, enSentence));
         File file = getFile("tatoeba/links.tar.bz2");
-        fileDataImporter.importLinksData(file);
-        fileDataImporter.importLinksData(file);
+        fileDataImporter.importLinksData(file, fileId());
+        fileDataImporter.importLinksData(file, fileId());
 
         Iterable<Sentences> foundRecords = sentencesService.findAll();
         assertThat(foundRecords).hasSize(2);

@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.j0rsa.cardsbuddy.DefaultData.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,8 +61,8 @@ public class SentencesServiceTest {
         sentencesService.saveAll(Lists.newArrayList(enSentence, ruSentence));
         Sentences deSentence = aSentenceWithText("Sie bestand die Prüfung.")
                 .lang(Language.Code.DE.getIso639_3Value()).build();
-        deSentence.addTranslationIfNotExist(enSentence);
-        deSentence.addTranslationIfNotExist(ruSentence);
+        deSentence.addTranslationOrReplace(enSentence, updateId());
+        deSentence.addTranslationOrReplace(ruSentence, updateId());
         sentencesService.save(deSentence);
 
         List<Sentences> foundSentences = sentencesService.findSentences(Language.Code.DE, Language.Code.EN, "die", defaultPage());
@@ -81,8 +82,8 @@ public class SentencesServiceTest {
         sentencesService.saveAll(Lists.newArrayList(enSentence, ruSentence));
         Sentences deSentence = aSentenceWithText("Sie bestand die Prüfung.")
                 .lang(Language.Code.DE.getIso639_3Value()).build();
-        deSentence.addTranslationIfNotExist(enSentence);
-        deSentence.addTranslationIfNotExist(ruSentence);
+        deSentence.addTranslationOrReplace(enSentence, updateId());
+        deSentence.addTranslationOrReplace(ruSentence, updateId());
         sentencesService.save(deSentence);
 
         List<Sentences> foundSentences = sentencesService.findSentences(Language.Code.DE, Language.Code.EN, "die", defaultPage(1));
@@ -99,4 +100,9 @@ public class SentencesServiceTest {
         List<Sentences> foundSentences = sentencesService.findSentences(Language.Code.DE, Language.Code.EN, "die", defaultPage());
         assertThat(foundSentences).isEmpty();
     }
+
+    private UUID updateId() {
+        return UUID.randomUUID();
+    }
+
 }

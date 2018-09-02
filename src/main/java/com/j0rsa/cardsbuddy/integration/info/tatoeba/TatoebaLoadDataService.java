@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 public class TatoebaLoadDataService {
@@ -17,13 +18,13 @@ public class TatoebaLoadDataService {
         this.fileDataImporter = fileDataImporter;
     }
 
-    public void loadSentencesData() throws IOException {
+    public void loadSentencesData(UUID updateId) throws IOException {
         File file = tatoebaFileReader.readSentences();
-        fileDataImporter.importSentencesData(file);
+        fileDataImporter.importSentencesData(file, updateId);
     }
 
-    public void loadLinksData() throws IOException {
+    public void loadLinksData(UUID updateId) throws IOException {
         File file = tatoebaFileReader.readLinks();
-        fileDataImporter.importLinksData(file);
+        fileDataImporter.importLinksData(file, updateId);
     }
 }

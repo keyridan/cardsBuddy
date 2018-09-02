@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import static com.j0rsa.cardsbuddy.integration.common.FileExtractor.unpackAndReadData;
 
@@ -20,34 +21,36 @@ public class TatoebaFileDataImporter {
         this.sentencesService = sentencesService;
     }
 
-    public void importSentencesData(File file) throws IOException {
+    public void importSentencesData(File file, UUID updateId) throws IOException {
         unpackAndReadData(file, lineParts1 -> {
-            Sentences sentences1 = createSentence(lineParts1);
-            sentencesService.saveIfSupportedLanguage(sentences1);
+            Sentences newSentence = createSentence(lineParts1, updateId);
+            sentencesService.findById(newSentence.getId()).ifPresent(
+                    foundSentence -> newSentence.setTranslations(foundSentence.getTranslations())
+            );
+            sentencesService.saveIfSupportedLanguage(newSentence);
         });
     }
 
-    public void importLinksData(File file) throws IOException {
+    public void importLinksData(File file, UUID updateId) throws IOException {
         unpackAndReadData(file, lineParts1 -> {
             Tuple2<Long, Long> link = parseLink(lineParts1);
             sentencesService.findById(link._1)
                     .ifPresent(sentence ->
                             sentencesService.findById(link._2)
                                     .ifPresent(translation -> {
-                                        boolean wasAdded = sentence.addTranslationIfNotExist(translation);
-                                        if (wasAdded) {
-                                            sentencesService.save(sentence);
-                                        }
+                                        sentence.addTranslationOrReplace(translation, updateId);
+                                        sentencesService.save(sentence);
                                     })
                     );
         });
     }
 
-    private Sentences createSentence(String[] lineParts) {
+    private Sentences createSentence(String[] lineParts, UUID updateId) {
         return Sentences.builder()
                 .id(longValue(lineParts[0]))
                 .lang(lineParts[1])
                 .text(lineParts[2])
+                .updateId(updateId)
                 .build();
     }
 

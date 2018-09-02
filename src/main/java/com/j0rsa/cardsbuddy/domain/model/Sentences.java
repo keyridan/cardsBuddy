@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.jdo.annotations.Embedded;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -22,34 +23,34 @@ public class Sentences {
     private Long id;
     private String lang;
     private String text;
+    private UUID updateId;
     @Builder.Default
     @Embedded
     private List<Translation> translations = Lists.newArrayList();
 
     static public Sentences createFrom(List<Translation> translations, Sentences sentences) {
-        return new Sentences(sentences.id, sentences.lang, sentences.text, translations);
+        return new Sentences(sentences.id, sentences.lang, sentences.text, sentences.updateId, translations);
     }
 
-    public boolean addTranslationIfNotExist(Sentences sentences) {
-        if (!hasTranslation(sentences)) {
-            addTranslation(sentences);
-            return true;
-        }
-        return false;
+    public void addTranslationOrReplace(Sentences sentences, UUID updateId) {
+        removeIfExist(sentences);
+        addTranslation(sentences, updateId);
     }
 
-    private void addTranslation(Sentences sentences) {
+    private void addTranslation(Sentences sentences, UUID updateId) {
         Translation translation = Translation.builder()
                 .sentences(sentences)
                 .lang(sentences.lang)
+                .updateId(updateId)
                 .build();
         this.translations.add(translation);
     }
 
-    public boolean hasTranslation(Sentences translation) {
-        return !translations.isEmpty() && translations.stream()
-                .map(Translation::getSentences)
-                .collect(Collectors.toList())
-                .contains(translation);
+    public void removeIfExist(Sentences sentences) {
+        if (!translations.isEmpty()) {
+            this.translations = translations.stream()
+                    .filter(existentTranslation -> !existentTranslation.getSentences().getId().equals(sentences.id))
+                    .collect(Collectors.toList());
+        }
     }
 }
