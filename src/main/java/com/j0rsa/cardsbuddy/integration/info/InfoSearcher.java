@@ -38,7 +38,7 @@ public class InfoSearcher {
     }
 
     private CheckedFunction0<List<InfoService>> resolveInfoService(TranslationRequest request) {
-        return () -> infoServiceResolver.resolve(request.getFromLanguage(), request.getInfoTypes());
+        return () -> infoServiceResolver.resolve(request);
     }
 
     private Function<List<InfoService>, List<Info>> searchInfosAndAddErrorMessages(TranslationRequest request, List<String> mesages) {

@@ -1,6 +1,6 @@
 package com.j0rsa.cardsbuddy.common;
 
-import com.j0rsa.cardsbuddy.integration.translation.model.Language;
+import com.j0rsa.cardsbuddy.integration.translation.model.TranslationRequest;
 import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Service;
 
@@ -16,27 +16,27 @@ public class InfoServiceResolver {
         this.infoServices = infoServices;
     }
 
-    public List<InfoService> resolve(Language.Code language, List<InfoProvider.Code> infoTypes) {
-        return infoTypes.isEmpty()
+    public List<InfoService> resolve(TranslationRequest request) {
+        return request.getInfoTypes().isEmpty()
                 ? Lists.newArrayList()
-                : filterServices(language, infoTypes);
+                : filterServices(request);
     }
 
-    private List<InfoService> filterServices(Language.Code language, List<InfoProvider.Code> infoTypes) {
+    private List<InfoService> filterServices(TranslationRequest request) {
         return infoServices.stream()
-                .filter(isServiceProvideInfoAndSupportLanguage(infoTypes, language))
+                .filter(isServiceProvideInfoAndSupportLanguage(request))
                 .collect(Collectors.toList());
     }
 
-    private Predicate<InfoService> isServiceProvideInfoAndSupportLanguage(List<InfoProvider.Code> infoTypes, Language.Code language) {
-        return isServiceProvideInfo(infoTypes).and(isServiceSupportLanguage(language));
+    private Predicate<InfoService> isServiceProvideInfoAndSupportLanguage(TranslationRequest request) {
+        return isServiceProvideInfo(request.getInfoTypes()).and(isServiceSupportLanguage(request));
     }
 
     private Predicate<InfoService> isServiceProvideInfo(List<InfoProvider.Code> infoTypes) {
         return service -> infoTypes.contains(service.providerCode());
     }
 
-    private Predicate<InfoService> isServiceSupportLanguage(Language.Code language) {
-        return service -> service.languages().contains(language);
+    private Predicate<InfoService> isServiceSupportLanguage(TranslationRequest request) {
+        return service -> service.canBeProvided(request);
     }
 }

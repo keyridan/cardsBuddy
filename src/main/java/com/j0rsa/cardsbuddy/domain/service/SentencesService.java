@@ -75,7 +75,10 @@ public class SentencesService {
                 Language.Code.RU,
                 Language.Code.PT,
                 Language.Code.PL,
-                Language.Code.UK
+                Language.Code.UK,
+                Language.Code.BG,
+                Language.Code.CS,
+                Language.Code.SR
         );
     }
 

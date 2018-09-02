@@ -31,13 +31,15 @@ public class TatoebaFileDataImporter {
         unpackAndReadData(file, lineParts1 -> {
             Tuple2<Long, Long> link = parseLink(lineParts1);
             sentencesService.findById(link._1)
-                    .ifPresent(sentence -> {
-                        sentencesService.findById(link._2)
-                                .ifPresent(translation -> {
-                                    sentence.addTranslation(translation);
-                                    sentencesService.save(sentence);
-                                });
-                    });
+                    .ifPresent(sentence ->
+                            sentencesService.findById(link._2)
+                                    .ifPresent(translation -> {
+                                        boolean wasAdded = sentence.addTranslationIfNotExist(translation);
+                                        if (wasAdded) {
+                                            sentencesService.save(sentence);
+                                        }
+                                    })
+                    );
         });
     }
 

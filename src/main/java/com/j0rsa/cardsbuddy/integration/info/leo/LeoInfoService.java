@@ -45,7 +45,7 @@ public class LeoInfoService implements InfoService<LeoInfo> {
     }
 
     @Override
-    public List<Language.Code> languages() {
+    public boolean canBeProvided(TranslationRequest request) {
         return Lists.newArrayList(
                 Language.Code.EN,
                 Language.Code.DE,
@@ -55,7 +55,7 @@ public class LeoInfoService implements InfoService<LeoInfo> {
                 Language.Code.RU,
                 Language.Code.PT,
                 Language.Code.PL
-        );
+        ).contains(request.getFromLanguage());
     }
 
     @Override

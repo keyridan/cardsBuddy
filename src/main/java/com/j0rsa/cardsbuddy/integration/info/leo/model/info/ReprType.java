@@ -1,6 +1,7 @@
 package com.j0rsa.cardsbuddy.integration.info.leo.model.info;
 
 import lombok.Data;
+import org.assertj.core.util.Lists;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ReprType extends ContentContainer {
             @XmlElementRef(name = "m", type = JAXBElement.class, required = false)
     })
     @XmlMixed
-    protected List<Serializable> content;
+    protected List<Serializable> content = Lists.newArrayList();
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
@@ -32,7 +33,7 @@ public class ReprType extends ContentContainer {
 
         @XmlElementRef(name = "b", type = JAXBElement.class, required = false)
         @XmlMixed
-        protected List<Serializable> content;
+        protected List<Serializable> content = Lists.newArrayList();
         @XmlAttribute(name = "t")
         protected String t;
 

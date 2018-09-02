@@ -18,11 +18,11 @@ public class FileExtractor {
                 continue;
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(tarInput));
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] lineParts = line.split("\t");
-                consumer.accept(lineParts);
-            }
+            br.lines()
+                    .forEach(line -> {
+                        String[] lineParts = line.split("\t");
+                        consumer.accept(lineParts);
+                    });
         }
     }
 }

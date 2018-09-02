@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.jdo.annotations.Embedded;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,11 +30,26 @@ public class Sentences {
         return new Sentences(sentences.id, sentences.lang, sentences.text, translations);
     }
 
-    public void addTranslation(Sentences sentences) {
+    public boolean addTranslationIfNotExist(Sentences sentences) {
+        if (!hasTranslation(sentences)) {
+            addTranslation(sentences);
+            return true;
+        }
+        return false;
+    }
+
+    private void addTranslation(Sentences sentences) {
         Translation translation = Translation.builder()
                 .sentences(sentences)
                 .lang(sentences.lang)
                 .build();
         this.translations.add(translation);
+    }
+
+    public boolean hasTranslation(Sentences translation) {
+        return !translations.isEmpty() && translations.stream()
+                .map(Translation::getSentences)
+                .collect(Collectors.toList())
+                .contains(translation);
     }
 }

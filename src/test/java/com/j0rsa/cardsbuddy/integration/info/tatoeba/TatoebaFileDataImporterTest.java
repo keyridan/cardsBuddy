@@ -62,8 +62,32 @@ public class TatoebaFileDataImporterTest {
         Iterable<Sentences> foundRecords = sentencesService.findAll();
         assertThat(foundRecords).hasSize(2);
         Optional<Sentences> foundSentences = sentencesService.findById(2L);
-        assertThat(foundSentences.get().getTranslations()).extracting(Translation::getLang).containsOnly(Language.Code.EN.getIso639_3Value());
-        assertThat(foundSentences.get().getTranslations()).extracting(Translation::getSentences).containsOnly(enSentence);
+        assertThat(foundSentences.get().getTranslations()).extracting(Translation::getLang).containsExactly(Language.Code.EN.getIso639_3Value());
+        assertThat(foundSentences.get().getTranslations()).extracting(Translation::getSentences).containsExactly(enSentence);
+    }
+
+    @Test
+    public void importLinksDataWhenImportSameData() throws Exception {
+        Sentences deSentence = DefaultData.aSentence()
+                .id(2L)
+                .lang(Language.Code.DE.getIso639_3Value())
+                .text("Sie bestand die Prüfung.")
+                .build();
+        Sentences enSentence = DefaultData.aSentence()
+                .id(4L)
+                .lang(Language.Code.EN.getIso639_3Value())
+                .text("She passed the examination.")
+                .build();
+        sentencesService.saveAll(Lists.newArrayList(deSentence, enSentence));
+        File file = getFile("tatoeba/links.tar.bz2");
+        fileDataImporter.importLinksData(file);
+        fileDataImporter.importLinksData(file);
+
+        Iterable<Sentences> foundRecords = sentencesService.findAll();
+        assertThat(foundRecords).hasSize(2);
+        Optional<Sentences> foundSentences = sentencesService.findById(2L);
+        assertThat(foundSentences.get().getTranslations()).extracting(Translation::getLang).containsExactly(Language.Code.EN.getIso639_3Value());
+        assertThat(foundSentences.get().getTranslations()).extracting(Translation::getSentences).containsExactly(enSentence);
     }
 
     private File getFile(String s) {

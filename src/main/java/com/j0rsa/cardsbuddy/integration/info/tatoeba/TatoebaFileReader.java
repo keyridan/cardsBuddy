@@ -28,11 +28,11 @@ public class TatoebaFileReader {
         return readFile(linksFileUrl);
     }
 
-    private File readFile(String linksFileUrl) throws IOException {
-        String[] url = linksFileUrl.split("//");
+    private File readFile(String fileUrl) throws IOException {
+        String[] url = fileUrl.split("//");
         String pathName = String.format(TMP_PATH_TEMPLATE, url[url.length - 1]);
         File file = FileUtils.getFile(pathName);
-        FileUtils.copyURLToFile(new URL(sentencesFileUrl), file, 1000, 1000000000);
+        FileUtils.copyURLToFile(new URL(fileUrl), file, 1000, 1000000000);
 
         return file;
     }

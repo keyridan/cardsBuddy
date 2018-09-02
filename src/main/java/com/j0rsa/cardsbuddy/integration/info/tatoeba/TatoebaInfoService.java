@@ -5,7 +5,6 @@ import com.j0rsa.cardsbuddy.common.InfoService;
 import com.j0rsa.cardsbuddy.controller.model.TatoebaInfo;
 import com.j0rsa.cardsbuddy.domain.model.Sentences;
 import com.j0rsa.cardsbuddy.domain.service.SentencesService;
-import com.j0rsa.cardsbuddy.integration.translation.model.Language;
 import com.j0rsa.cardsbuddy.integration.translation.model.TranslationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -36,8 +35,9 @@ public class TatoebaInfoService implements InfoService<TatoebaInfo> {
     }
 
     @Override
-    public List<Language.Code> languages() {
-        return service.languages();
+    public boolean canBeProvided(TranslationRequest request) {
+        return service.languages().contains(request.getFromLanguage())
+                && service.languages().contains(request.getToLanguage());
     }
 
     @Override

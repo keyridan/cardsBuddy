@@ -60,8 +60,8 @@ public class SentencesServiceTest {
         sentencesService.saveAll(Lists.newArrayList(enSentence, ruSentence));
         Sentences deSentence = aSentenceWithText("Sie bestand die Prüfung.")
                 .lang(Language.Code.DE.getIso639_3Value()).build();
-        deSentence.addTranslation(enSentence);
-        deSentence.addTranslation(ruSentence);
+        deSentence.addTranslationIfNotExist(enSentence);
+        deSentence.addTranslationIfNotExist(ruSentence);
         sentencesService.save(deSentence);
 
         List<Sentences> foundSentences = sentencesService.findSentences(Language.Code.DE, Language.Code.EN, "die", defaultPage());
@@ -81,8 +81,8 @@ public class SentencesServiceTest {
         sentencesService.saveAll(Lists.newArrayList(enSentence, ruSentence));
         Sentences deSentence = aSentenceWithText("Sie bestand die Prüfung.")
                 .lang(Language.Code.DE.getIso639_3Value()).build();
-        deSentence.addTranslation(enSentence);
-        deSentence.addTranslation(ruSentence);
+        deSentence.addTranslationIfNotExist(enSentence);
+        deSentence.addTranslationIfNotExist(ruSentence);
         sentencesService.save(deSentence);
 
         List<Sentences> foundSentences = sentencesService.findSentences(Language.Code.DE, Language.Code.EN, "die", defaultPage(1));
