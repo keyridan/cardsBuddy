@@ -12,5 +12,5 @@ public class SystemConstants {
     public static final String TINY_CARDS_PREFIX = "tinycards_";
 
     public static final String WRONG_CODE_EXCEPTION_MESSAGE = "Unable to get token with received code";
-    public static final String FILES_IMPORTER_CRON = "0 0 0 L * ? *";
+    public static final String FILES_IMPORTER_CRON = "0 0 0 1 * ?";
 }
