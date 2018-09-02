@@ -17,12 +17,17 @@ public class FileLoadHistoryService {
         this.repository = repository;
     }
 
-    public UUID create() {
+    public FileLoadHistory create() {
         UUID uuid = UUID.randomUUID();
         FileLoadHistory history = FileLoadHistory.builder()
-                .dateTime(LocalDateTime.now())
+                .starDate(LocalDateTime.now())
                 .id(uuid)
                 .build();
-        return repository.save(history).getId();
+        return repository.save(history);
+    }
+
+    public void end(FileLoadHistory history) {
+        history.setEndDate(LocalDateTime.now());
+        repository.save(history);
     }
 }

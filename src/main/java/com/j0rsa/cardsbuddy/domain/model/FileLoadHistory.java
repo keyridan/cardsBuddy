@@ -19,5 +19,6 @@ import java.util.UUID;
 public class FileLoadHistory {
     @Id
     private UUID id;
-    private LocalDateTime dateTime;
+    private LocalDateTime starDate;
+    private LocalDateTime endDate;
 }
