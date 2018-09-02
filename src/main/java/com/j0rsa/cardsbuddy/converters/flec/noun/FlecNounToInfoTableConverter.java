@@ -47,7 +47,7 @@ public class FlecNounToInfoTableConverter implements Converter<NounFlec, InfoTab
 
     private SmallTitledRows addSmallTitledRow(Title title, NounFlecTable flecTable) {
         SmallTitledRows smallTitleRows = SmallTitledRows.builder()
-                .value(flecTable.getTitle())
+                .title(flecTable.getTitle())
                 .build();
         title.addRows(smallTitleRows);
         return smallTitleRows;

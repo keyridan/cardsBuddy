@@ -12,6 +12,7 @@ public class SmallTitledRows {
     @Builder.Default
     private List<InfoData> infoData = Lists.newArrayList();
     private String value;
+    private String title;
 
     public void addData(InfoData data) {
         this.infoData.add(data);

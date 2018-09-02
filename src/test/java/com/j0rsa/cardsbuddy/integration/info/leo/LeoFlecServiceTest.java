@@ -45,7 +45,7 @@ public class LeoFlecServiceTest {
         InfoTable table = leoFlecService.requestFlec(testRequest, verbUrlPart);
 
         assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
-        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getTitle).contains(smallTitleRowValue);
         assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 
@@ -66,7 +66,7 @@ public class LeoFlecServiceTest {
         InfoTable table = leoFlecService.requestFlec(testRequest, nounUrlPart);
 
         assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
-        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getTitle).contains(smallTitleRowValue);
         assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 
@@ -95,7 +95,7 @@ public class LeoFlecServiceTest {
         InfoTable table = leoFlecService.requestFlec(request, urlPart);
 
         assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
-        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getTitle).contains(smallTitleRowValue);
         assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 
@@ -120,7 +120,7 @@ public class LeoFlecServiceTest {
         InfoTable table = leoFlecService.requestFlec(request, urlPart);
 
         assertThat(table.getRows()).extracting(Title::getValue).contains(titleRowValue);
-        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getValue).contains(smallTitleRowValue);
+        assertThat(extractedTitledRow(table)).extracting(SmallTitledRows::getTitle).contains(smallTitleRowValue);
         assertThat(extractedInfoData(table)).contains(infoData1, infoData2);
     }
 

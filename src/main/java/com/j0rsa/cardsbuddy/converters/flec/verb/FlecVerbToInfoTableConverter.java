@@ -49,7 +49,7 @@ public class FlecVerbToInfoTableConverter implements Converter<VerbFlec, InfoTab
 
     private SmallTitledRows addSmallTitledRow(Title title, VerbFlecTable flecTable) {
         SmallTitledRows smallTitledRows = SmallTitledRows.builder()
-                .value(flecTable.getTitle())
+                .title(flecTable.getTitle())
                 .infoData(Lists.newArrayList())
                 .build();
         title.addRows(smallTitledRows);
